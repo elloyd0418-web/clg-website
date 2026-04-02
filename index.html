@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Card Lloyd Group — Precision by Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--copper:#c8a86a;--bg:#12100c;--cream:#f0e8d4;--muted:#8a7a56;--tag:#6a5830;--cl:rgba(200,168,106,0.2);--cd:rgba(200,168,106,0.08)}
+html{background:var(--bg);color:var(--cream);font-family:'DM Sans',sans-serif;font-weight:300;scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(200,168,106,0.3);color:var(--cream)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--cl);border-radius:2px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;border-bottom:1px solid transparent;transition:all .4s}
+nav.scrolled{background:rgba(18,16,12,.92);backdrop-filter:blur(16px);border-color:var(--cl)}
+.nav-brand{display:flex;align-items:center;gap:.75rem;font-family:'Sorts Mill Goudy',serif;font-size:1rem;letter-spacing:.1em}
+.nav-star{color:var(--copper)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--copper)}
+.nav-cta{border:1px solid var(--cl);color:var(--copper);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:.5rem 1.4rem;transition:all .2s}
+.nav-cta:hover{background:var(--copper);color:var(--bg)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7rem 2rem 5rem;text-align:center;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:-20%;background-image:linear-gradient(rgba(200,168,106,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,106,.18) 1px,transparent 1px);background-size:64px 64px;transition:transform .1s linear}
+.hero-radial{position:absolute;inset:0;background:radial-gradient(ellipse 75% 65% at 50% 50%,rgba(18,16,12,0) 0%,var(--bg) 72%)}
+.hero-mark{position:relative;z-index:1;margin-bottom:2.5rem;animation:markIn 1.4s cubic-bezier(.16,1,.3,1) both}
+@keyframes markIn{from{opacity:0;transform:scale(.8) rotate(-20deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+.wc-card{font-family:'Sorts Mill Goudy',serif;font-size:clamp(3rem,8vw,6rem);letter-spacing:.04em;line-height:1;position:relative;z-index:1;animation:fadeUp 1s .3s ease both}
+.wc-group{font-family:'Sorts Mill Goudy',serif;font-size:clamp(1rem,2.5vw,1.5rem);letter-spacing:.4em;text-transform:uppercase;color:var(--muted);margin-top:.35rem;position:relative;z-index:1;animation:fadeUp 1s .4s ease both}
+.hero-tagline{font-size:.75rem;letter-spacing:.32em;text-transform:uppercase;color:var(--tag);margin-top:.75rem;position:relative;z-index:1;animation:fadeUp 1s .5s ease both}
+.hero-div{width:56px;height:1px;background:var(--cl);margin:2rem auto;position:relative;z-index:1;animation:growX 1s .65s ease both}
+@keyframes growX{from{width:0;opacity:0}to{width:56px;opacity:1}}
+.hero-desc{max-width:460px;font-size:.95rem;line-height:1.85;color:var(--muted);position:relative;z-index:1;animation:fadeUp 1s .75s ease both}
+.hero-actions{display:flex;gap:1rem;margin-top:2.5rem;position:relative;z-index:1;animation:fadeUp 1s .95s ease both;flex-wrap:wrap;justify-content:center}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.scroll-line{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:1;width:1px;height:48px;background:linear-gradient(to bottom,transparent,rgba(200,168,106,.5));animation:fadeUp 1s 1.4s ease both,pulse 2s 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* BUTTONS */
+.btn-primary{background:var(--copper);color:var(--bg);font-weight:400;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;padding:.85rem 2rem;transition:opacity .2s;display:inline-block}
+.btn-primary:hover{opacity:.85}
+.btn-ghost{border:1px solid var(--cl);color:var(--copper);font-weight:300;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;padding:.85rem 2rem;transition:background .22s;display:inline-block}
+.btn-ghost:hover{background:var(--cd)}
+
+/* SECTIONS */
+section{padding:6rem 0}
+.inner{max-width:1200px;margin:0 auto;padding:0 3rem}
+.s-label{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--tag);margin-bottom:.9rem}
+.s-head{font-family:'Sorts Mill Goudy',serif;font-size:clamp(1.9rem,4vw,3rem);color:var(--cream);line-height:1.15;margin-bottom:1.5rem}
+.s-rule{width:48px;height:1px;background:var(--copper);margin-bottom:2.5rem}
+
+/* CAPS GRID */
+.caps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5px;background:var(--cl);margin-top:.5rem}
+.cap{background:var(--bg);padding:2.5rem 2rem;border-top:2px solid transparent;transition:all .3s}
+.cap:hover{border-top-color:var(--copper);background:var(--cd)}
+.cap-num{font-family:'Sorts Mill Goudy',serif;font-size:2rem;color:rgba(200,168,106,.22);line-height:1;margin-bottom:.6rem}
+.cap-title{font-family:'Sorts Mill Goudy',serif;font-size:1.15rem;color:var(--cream);margin-bottom:.8rem;line-height:1.3}
+.cap-body{font-size:.86rem;line-height:1.85;color:var(--muted)}
+
+/* TEAM */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-top:.5rem}
+.team-card{border:1px solid var(--cl);padding:2.5rem;transition:border-color .3s}
+.team-card:hover{border-color:rgba(200,168,106,.45)}
+.team-init{width:52px;height:52px;border:1px solid var(--cl);display:flex;align-items:center;justify-content:center;font-family:'Sorts Mill Goudy',serif;font-size:1rem;color:var(--copper);margin-bottom:1.75rem}
+.team-name{font-family:'Sorts Mill Goudy',serif;font-size:1.5rem;color:var(--cream);margin-bottom:.3rem}
+.team-role{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--copper)}
+.team-rule{width:32px;height:1px;background:var(--cl);margin:1.5rem 0}
+.team-bio{font-size:.86rem;line-height:1.85;color:var(--muted)}
+
+/* METHOD */
+.method-wrap{border:1px solid var(--cl)}
+.method-item{padding:2rem 2.5rem;border-bottom:1px solid var(--cl);display:grid;grid-template-columns:72px 1fr;gap:2rem;align-items:start;transition:background .25s}
+.method-item:last-child{border-bottom:none}
+.method-item:hover{background:var(--cd)}
+.method-num{font-family:'Sorts Mill Goudy',serif;font-size:2.5rem;color:rgba(200,168,106,.22);line-height:1}
+.method-title{font-family:'Sorts Mill Goudy',serif;font-size:1.1rem;color:var(--cream);margin-bottom:.5rem}
+.method-body{font-size:.87rem;line-height:1.85;color:var(--muted)}
+
+/* CTA */
+.cta{border-top:1px solid var(--cl);padding:6rem 2rem;text-align:center;position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 55% 130% at 50% 100%,rgba(200,168,106,.07) 0%,transparent 70%)}
+.cta-head{font-family:'Sorts Mill Goudy',serif;font-size:clamp(2.2rem,5.5vw,4rem);color:var(--cream);line-height:1.15;margin-bottom:1rem;position:relative;z-index:1}
+.cta-sub{font-size:.9rem;color:var(--muted);margin-bottom:2.5rem;position:relative;z-index:1}
+.cta-url{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--tag);margin-top:2rem;position:relative;z-index:1}
+
+/* FOOTER */
+footer{border-top:1px solid rgba(200,168,106,.15);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:.72rem;color:var(--tag)}
+.footer-right{font-style:italic;font-family:'Sorts Mill Goudy',serif;font-size:.8rem;color:rgba(106,88,48,.7)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:720px){
+  nav{padding:1rem 1.25rem}.nav-links{display:none}.section{padding:4rem 0}.inner{padding:0 1.25rem}
+  .method-item{grid-template-columns:1fr;gap:.5rem}.method-num{font-size:1.5rem}
+  footer{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-brand">
+    <svg width="26" height="26" viewBox="0 0 160 160" fill="none">
+      <circle cx="80" cy="80" r="76" stroke="#c8a86a" stroke-width=".6" opacity=".25"/>
+      <polygon points="80,22 128.5,52 128.5,108 80,138 31.5,108 31.5,52" stroke="#c8a86a" stroke-width="1" fill="rgba(200,168,106,.05)"/>
+      <line x1="80" y1="80" x2="80" y2="22" stroke="#c8a86a" stroke-width="1.4"/>
+      <line x1="80" y1="80" x2="80" y2="138" stroke="#c8a86a" stroke-width=".9" opacity=".7"/>
+      <line x1="80" y1="80" x2="128.5" y2="52" stroke="#c8a86a" stroke-width=".9" opacity=".7"/>
+      <line x1="80" y1="80" x2="31.5" y2="108" stroke="#c8a86a" stroke-width=".9" opacity=".7"/>
+      <line x1="80" y1="80" x2="31.5" y2="52" stroke="#c8a86a" stroke-width=".9" opacity=".7"/>
+      <line x1="80" y1="80" x2="128.5" y2="108" stroke="#c8a86a" stroke-width=".9" opacity=".7"/>
+      <polygon points="80,18 76.5,30 80,26.5 83.5,30" fill="#c8a86a"/>
+      <circle cx="80" cy="80" r="18" stroke="#c8a86a" stroke-width=".6" fill="rgba(200,168,106,.04)" opacity=".65"/>
+      <circle cx="80" cy="80" r="3.5" fill="#c8a86a"/>
+    </svg>
+    Card <span class="nav-star">✦</span>Lloyd Group
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#method">Methodology</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Engage</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid" id="hg"></div>
+  <div class="hero-radial"></div>
+  <div class="hero-mark">
+    <svg width="170" height="170" viewBox="0 0 160 160" fill="none">
+      <circle cx="80" cy="80" r="76" stroke="#c8a86a" stroke-width=".6" opacity=".25"/>
+      <g stroke="#c8a86a" stroke-width=".8" opacity=".5">
+        <line x1="80" y1="4" x2="80" y2="12"/><line x1="80" y1="148" x2="80" y2="156"/>
+        <line x1="4" y1="80" x2="12" y2="80"/><line x1="148" y1="80" x2="156" y2="80"/>
+        <line x1="26.7" y1="26.7" x2="32.4" y2="32.4"/><line x1="127.6" y1="127.6" x2="133.3" y2="133.3"/>
+        <line x1="133.3" y1="26.7" x2="127.6" y2="32.4"/><line x1="32.4" y1="127.6" x2="26.7" y2="133.3"/>
+      </g>
+      <circle cx="80" cy="80" r="56" stroke="#c8a86a" stroke-width=".5" opacity=".2"/>
+      <polygon points="80,22 128.5,52 128.5,108 80,138 31.5,108 31.5,52" stroke="#c8a86a" stroke-width="1" fill="rgba(200,168,106,.05)"/>
+      <polygon points="80,44 105,59 105,101 80,116 55,101 55,59" stroke="#c8a86a" stroke-width=".5" fill="none" opacity=".35"/>
+      <line x1="80" y1="80" x2="80" y2="22" stroke="#c8a86a" stroke-width="1.4"/>
+      <line x1="80" y1="80" x2="80" y2="138" stroke="#c8a86a" stroke-width=".9" opacity=".7"/>
+      <line x1="80" y1="80" x2="128.5" y2="52" stroke="#c8a86a" stroke-width=".9" opacity=".7"/>
+      <line x1="80" y1="80" x2="31.5" y2="108" stroke="#c8a86a" stroke-width=".9" opacity=".7"/>
+      <line x1="80" y1="80" x2="31.5" y2="52" stroke="#c8a86a" stroke-width=".9" opacity=".7"/>
+      <line x1="80" y1="80" x2="128.5" y2="108" stroke="#c8a86a" stroke-width=".9" opacity=".7"/>
+      <polygon points="80,18 76.5,30 80,26.5 83.5,30" fill="#c8a86a"/>
+      <rect x="77.5" y="135.5" width="5" height="5" fill="#c8a86a" opacity=".55" transform="rotate(45 80 138)"/>
+      <rect x="126" y="49.5" width="5" height="5" fill="#c8a86a" opacity=".55" transform="rotate(45 128.5 52)"/>
+      <rect x="29" y="105.5" width="5" height="5" fill="#c8a86a" opacity=".55" transform="rotate(45 31.5 108)"/>
+      <rect x="29" y="49.5" width="5" height="5" fill="#c8a86a" opacity=".55" transform="rotate(45 31.5 52)"/>
+      <rect x="126" y="105.5" width="5" height="5" fill="#c8a86a" opacity=".55" transform="rotate(45 128.5 108)"/>
+      <circle cx="80" cy="80" r="18" stroke="#c8a86a" stroke-width=".6" fill="rgba(200,168,106,.04)" opacity=".65"/>
+      <circle cx="80" cy="80" r="3.5" fill="#c8a86a"/>
+      <circle cx="80" cy="80" r="6" stroke="#c8a86a" stroke-width=".6" fill="none" opacity=".5"/>
+      <text x="80" y="16" text-anchor="middle" fill="#c8a86a" font-family="DM Sans,sans-serif" font-size="7" font-weight="300" letter-spacing=".12em" opacity=".7">N</text>
+    </svg>
+  </div>
+  <div class="wc-card">Card <span class="nav-star">✦</span>Lloyd</div>
+  <div class="wc-group">Group</div>
+  <div class="hero-tagline">Precision by Design</div>
+  <div class="hero-div"></div>
+  <p class="hero-desc">Geospatial intelligence and geophysical expertise at the intersection of data, terrain, and decision.</p>
+  <div class="hero-actions">
+    <a href="#services" class="btn-primary">Our Services</a>
+    <a href="#team" class="btn-ghost">Meet the Team</a>
+  </div>
+  <div class="scroll-line"></div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="inner">
+    <div class="reveal">
+      <div class="s-label">What We Do</div>
+      <h2 class="s-head">Geospatial &amp; Geophysical<br>Advisory Services</h2>
+      <div class="s-rule"></div>
+    </div>
+    <div class="caps-grid reveal">
+      <div class="cap"><div class="cap-num">01</div><div class="cap-title">Geophysical Survey &amp; Analysis</div><p class="cap-body">Seismic, gravity, and magnetic survey design and interpretation. Subsurface characterization for critical infrastructure, resource assessment, and environmental compliance.</p></div>
+      <div class="cap"><div class="cap-num">02</div><div class="cap-title">Geospatial Intelligence</div><p class="cap-body">High-precision spatial data integration, datum transformation, and terrain analysis. GIS workflows engineered for government, defense, and enterprise-scale deployment.</p></div>
+      <div class="cap"><div class="cap-num">03</div><div class="cap-title">Business Development &amp; Strategy</div><p class="cap-body">Market positioning, federal contracting strategy, and partnership development for geoscience and technology firms seeking sustained growth in complex markets.</p></div>
+      <div class="cap"><div class="cap-num">04</div><div class="cap-title">Technical Due Diligence</div><p class="cap-body">Independent review of geophysical datasets, survey methodologies, and subsurface models in support of M&amp;A, permitting, and investment decisions.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section id="method" style="background:rgba(200,168,106,.025);border-top:1px solid var(--cl);border-bottom:1px solid var(--cl)">
+  <div class="inner">
+    <div class="reveal">
+      <div class="s-label">How We Work</div>
+      <h2 class="s-head">Method &amp; Rigor</h2>
+      <div class="s-rule"></div>
+      <div class="method-wrap">
+        <div class="method-item"><div class="method-num">I</div><div><div class="method-title">Situational Assessment</div><p class="method-body">Every engagement begins with a precise understanding of scope, data provenance, and client objectives — before any analysis begins.</p></div></div>
+        <div class="method-item"><div class="method-num">II</div><div><div class="method-title">Data Integration &amp; Verification</div><p class="method-body">Multi-source geospatial and geophysical datasets are normalized, cross-validated, and quality-checked against known reference benchmarks.</p></div></div>
+        <div class="method-item"><div class="method-num">III</div><div><div class="method-title">Interpretive Modeling</div><p class="method-body">Subsurface and spatial models are constructed with explicit uncertainty quantification — no black boxes, no unqualified conclusions.</p></div></div>
+        <div class="method-item"><div class="method-num">IV</div><div><div class="method-title">Deliverable &amp; Engagement</div><p class="method-body">Findings are communicated in formats calibrated to the audience — from technical appendices to executive briefings — with defensible conclusions.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="inner">
+    <div class="reveal">
+      <div class="s-label">The Group</div>
+      <h2 class="s-head">Founded on Expertise</h2>
+      <div class="s-rule"></div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-init">EL</div>
+          <div class="team-name">Eric Lloyd</div>
+          <div class="team-role">Founder · Business Development</div>
+          <div class="team-rule"></div>
+          <p class="team-bio">Eric brings deep experience in market strategy and client development across geoscience and technology sectors — translating technical capability into positioned value for the clients and decision-makers who need it most.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-init">DC</div>
+          <div class="team-name">Daniel Card</div>
+          <div class="team-role">Partner · Geophysicist</div>
+          <div class="team-rule"></div>
+          <p class="team-bio">Daniel is a practicing geophysicist with field and interpretive expertise across survey design, subsurface analysis, and spatial data integration — anchoring every engagement in verifiable science.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta">
+  <div class="cta-bg"></div>
+  <div class="reveal">
+    <div class="s-label" style="margin-bottom:1.25rem">Start a Conversation</div>
+    <h2 class="cta-head">Ready for Precision<br>by Design?</h2>
+    <p class="cta-sub">Geophysical rigor. Geospatial clarity. Strategic alignment.</p>
+    <a href="mailto:contact@thecardlloydgroup.com" class="btn-primary">Get in Touch</a>
+    <div class="cta-url">TheCardLloydGroup.com</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-copy">© 2026 The Card Lloyd Group. All rights reserved.</div>
+  <div class="footer-right">Precision by Design</div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+  document.getElementById('hg').style.transform = 'translateY(' + (window.scrollY * .15) + 'px)';
+}, {passive: true});
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 100); io.unobserve(e.target); }
+  });
+}, {threshold: .08});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+    </html>
