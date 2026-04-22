@@ -1,640 +1,1444 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>The Card Lloyd Group — Precision by Design</title>
-<meta name="description" content="The Card Lloyd Group acquires and operates precision technology businesses serving large asset owners. Intelligence, not reports.">
-<meta property="og:title" content="The Card Lloyd Group — Precision by Design">
-<meta property="og:description" content="Asset intelligence for the infrastructure that runs the world.">
-<meta property="og:type" content="website">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="description" content="The Card Lloyd Group is a drone intelligence holding company advising and operating at the intersection of infrastructure, data, and precision." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <style>
-:root {
-  --copper: #c8a86a;
-  --copper-dim: #8a7a56;
-  --bg: #12100c;
-  --cream: #f0e8d4;
-  --cream-dim: #a89880;
-  --surface: #1a1713;
-  --surface-2: #211e19;
-  --border: rgba(200,168,106,0.15);
-  --border-dim: rgba(200,168,106,0.08);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--cream);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
+  :root {
+    --copper: #c8a86a;
+    --copper-deep: #8a7a56;
+    --near-black: #12100c;
+    --near-black-soft: #1a1713;
+    --cream: #f0e8d4;
+    --cream-soft: #e8dfc5;
+    --serif: 'Sorts Mill Goudy', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    font-weight: 300;
+    background: var(--near-black);
+    color: var(--cream);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  .serif { font-family: var(--serif); font-weight: 400; }
+  .italic { font-style: italic; }
+  .copper { color: var(--copper); }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;transition:background 0.4s,backdrop-filter 0.4s}
-nav.scrolled{background:rgba(18,16,12,0.92);backdrop-filter:blur(16px);border-bottom:0.5px solid var(--border)}
-.nav-brand{font-family:'Sorts Mill Goudy',serif;font-size:1rem;color:var(--copper);letter-spacing:0.06em}
-.nav-links{display:flex;align-items:center;gap:2.5rem}
-.nav-links a{font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream-dim);transition:color 0.2s}
-.nav-links a:hover{color:var(--copper)}
-.nav-cta{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--copper);border:0.5px solid var(--copper);padding:0.6rem 1.4rem;transition:background 0.2s,color 0.2s}
-.nav-cta:hover{background:var(--copper);color:var(--bg)}
-.nav-mobile-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
-.nav-mobile-toggle span{display:block;width:22px;height:1px;background:var(--copper)}
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--near-black); }
+  ::-webkit-scrollbar-thumb { background: var(--copper-deep); }
 
-/* HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 3rem 6rem;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:
-  linear-gradient(to bottom, rgba(18,16,12,0.3) 0%, rgba(18,16,12,0.0) 30%, rgba(18,16,12,0.6) 70%, rgba(18,16,12,1) 100%),
-  linear-gradient(135deg, #12100c 0%, #1e1a14 40%, #251f16 60%, #12100c 100%);
-}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border-dim) 1px,transparent 1px),linear-gradient(90deg,var(--border-dim) 1px,transparent 1px);background-size:80px 80px;opacity:0.6}
-.hero-orb{position:absolute;top:20%;right:10%;width:600px;height:600px;background:radial-gradient(ellipse, rgba(200,168,106,0.06) 0%, transparent 70%);border-radius:50%}
-.hero-content{position:relative;z-index:2;max-width:780px}
-.hero-eyebrow{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--copper);margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.8s 0.3s forwards}
-.hero-headline{font-family:'Sorts Mill Goudy',serif;font-size:clamp(2.4rem,5vw,4.2rem);font-weight:400;line-height:1.15;color:var(--cream);margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.8s 0.5s forwards}
-.hero-headline em{font-style:italic;color:var(--copper)}
-.hero-sub{font-size:1rem;font-weight:300;color:var(--cream-dim);line-height:1.8;max-width:520px;margin-bottom:2.5rem;opacity:0;animation:fadeUp 0.8s 0.7s forwards}
-.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s 0.9s forwards}
-.btn-primary{background:var(--copper);color:var(--bg);font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;padding:1rem 2rem;font-family:'DM Sans',sans-serif;font-weight:500;transition:opacity 0.2s;display:inline-block}
-.btn-primary:hover{opacity:0.88}
-.btn-secondary{border:0.5px solid var(--copper-dim);color:var(--cream);font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;padding:1rem 2rem;transition:border-color 0.2s,color 0.2s;display:inline-block}
-.btn-secondary:hover{border-color:var(--copper);color:var(--copper)}
-.hero-scroll{position:absolute;bottom:2.5rem;right:3rem;display:flex;align-items:center;gap:0.75rem;opacity:0;animation:fadeIn 1s 1.2s forwards}
-.hero-scroll span{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--copper-dim)}
-.hero-scroll-line{width:40px;height:0.5px;background:var(--copper-dim)}
+  /* Layout */
+  .shell { min-height: 100vh; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+  @media (max-width: 768px) { .container { padding: 0 24px; } }
 
-/* TICKER */
-.ticker{border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:0.9rem 0;overflow:hidden;position:relative;background:var(--surface)}
-.ticker-inner{display:flex;gap:4rem;animation:ticker 30s linear infinite;white-space:nowrap}
-.ticker-item{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--copper-dim);flex-shrink:0}
-.ticker-item strong{color:var(--copper)}
+  /* Nav */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 0;
+    background: rgba(18,16,12,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,168,106,0.15);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-family: var(--serif); font-size: 20px; letter-spacing: 0.04em; }
+  .logo .mark { color: var(--copper); }
+  .nav-links { display: flex; gap: 32px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .nav-links a { opacity: 0.75; transition: opacity 0.2s, color 0.2s; }
+  .nav-links a:hover { opacity: 1; color: var(--copper); }
+  @media (max-width: 900px) { .nav-links { display: none; } }
 
-/* SECTIONS */
-section{padding:7rem 3rem}
-.section-label{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--copper);margin-bottom:1rem}
-.section-title{font-family:'Sorts Mill Goudy',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;line-height:1.2;color:var(--cream);margin-bottom:2rem}
-.section-title em{font-style:italic;color:var(--copper)}
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 28px; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    transition: all 0.25s; cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--copper); color: var(--near-black); font-weight: 500;
+  }
+  .btn-primary:hover { background: var(--cream); }
+  .btn-ghost {
+    border: 1px solid var(--copper); color: var(--copper);
+  }
+  .btn-ghost:hover { background: var(--copper); color: var(--near-black); }
 
-/* PROBLEM */
-#problem{background:var(--surface);position:relative;overflow:hidden}
-.problem-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
-.problem-left{}
-.problem-body{font-size:1.05rem;font-weight:300;color:var(--cream-dim);line-height:1.9;margin-bottom:1.5rem}
-.problem-body em{color:var(--cream);font-style:italic}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:3rem}
-.stat-cell{background:var(--surface);padding:1.5rem;text-align:center}
-.stat-num{font-family:'Sorts Mill Goudy',serif;font-size:2.4rem;color:var(--copper);line-height:1}
-.stat-label{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream-dim);margin-top:0.5rem}
-.problem-right{padding-top:5rem}
-.problem-list{list-style:none;display:flex;flex-direction:column;gap:0}
-.problem-list li{padding:1.25rem 0;border-bottom:0.5px solid var(--border);display:flex;gap:1rem;align-items:flex-start}
-.problem-list li:first-child{border-top:0.5px solid var(--border)}
-.pl-num{font-family:'Sorts Mill Goudy',serif;font-size:0.8rem;color:var(--copper);flex-shrink:0;padding-top:0.1rem}
-.pl-text{font-size:0.9rem;font-weight:300;color:var(--cream-dim);line-height:1.7}
-.pl-text strong{color:var(--cream);font-weight:400}
+  /* Hero */
+  .hero { padding: 180px 0 120px; position: relative; }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--copper);
+    margin-bottom: 32px;
+  }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(44px, 7vw, 88px); line-height: 1.05; letter-spacing: -0.02em;
+    max-width: 1100px; margin-bottom: 32px;
+  }
+  .hero h1 .emphasis { font-style: italic; color: var(--copper); }
+  .hero p.lede {
+    font-size: 19px; line-height: 1.6; max-width: 720px; opacity: 0.85;
+    margin-bottom: 44px;
+  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
 
-/* PORTFOLIO */
-#portfolio{background:var(--bg)}
-.portfolio-inner{max-width:1100px;margin:0 auto}
-.portfolio-intro{font-size:1rem;font-weight:300;color:var(--cream-dim);line-height:1.9;max-width:600px;margin-bottom:4rem}
-.portfolio-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
-.portfolio-card{background:var(--bg);padding:3rem;position:relative;overflow:hidden;transition:background 0.3s}
-.portfolio-card:hover{background:var(--surface)}
-.portfolio-card.featured{grid-column:span 1}
-.portfolio-card-tag{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--copper);margin-bottom:1.5rem}
-.portfolio-card-name{font-family:'Sorts Mill Goudy',serif;font-size:1.8rem;color:var(--cream);margin-bottom:0.5rem}
-.portfolio-card-type{font-size:0.8rem;color:var(--copper-dim);margin-bottom:1.5rem;letter-spacing:0.05em}
-.portfolio-card-desc{font-size:0.9rem;font-weight:300;color:var(--cream-dim);line-height:1.8;margin-bottom:2rem}
-.portfolio-card-link{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--copper);border-bottom:0.5px solid var(--copper);padding-bottom:0.2rem;display:inline-block;transition:opacity 0.2s}
-.portfolio-card-link:hover{opacity:0.7}
-.portfolio-card-coming{background:var(--surface-2);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:3rem;border:0.5px dashed var(--border)}
-.portfolio-card-coming .pc-label{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--copper-dim);margin-bottom:1rem}
-.portfolio-card-coming .pc-text{font-family:'Sorts Mill Goudy',serif;font-size:1.4rem;color:var(--cream-dim);font-style:italic}
+  /* Ticker */
+  .ticker {
+    margin-top: 96px; padding: 20px 0;
+    border-top: 1px solid rgba(200,168,106,0.15);
+    border-bottom: 1px solid rgba(200,168,106,0.15);
+    overflow: hidden; white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-flex; animation: scroll 50s linear infinite; gap: 56px;
+    font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .ticker-inner strong { color: var(--copper); font-weight: 500; }
+  .ticker-inner span { opacity: 0.8; }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
 
-/* CAPABILITIES */
-#capabilities{background:var(--surface);position:relative}
-.capabilities-inner{max-width:1100px;margin:0 auto}
-.cap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);margin-top:4rem}
-.cap-card{background:var(--surface);padding:2.5rem;transition:background 0.3s}
-.cap-card:hover{background:var(--surface-2)}
-.cap-num{font-family:'Sorts Mill Goudy',serif;font-size:0.75rem;color:var(--copper-dim);margin-bottom:1.2rem}
-.cap-title{font-family:'Sorts Mill Goudy',serif;font-size:1.25rem;color:var(--cream);margin-bottom:1rem;line-height:1.3}
-.cap-body{font-size:0.875rem;font-weight:300;color:var(--cream-dim);line-height:1.85}
-.cap-body em{color:var(--cream);font-style:italic}
-.cap-tag{display:inline-block;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--copper);border:0.5px solid var(--border);padding:0.3rem 0.7rem;margin-top:1.5rem;margin-right:0.4rem}
+  /* Section base */
+  .section { padding: 120px 0; border-top: 1px solid rgba(200,168,106,0.1); }
+  .section-eyebrow {
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--copper);
+    margin-bottom: 32px;
+  }
+  .section-title {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(36px, 5vw, 64px); line-height: 1.1; letter-spacing: -0.015em;
+    max-width: 960px; margin-bottom: 40px;
+  }
+  .section-title .emphasis { font-style: italic; color: var(--copper); }
+  .section-lede { font-size: 18px; line-height: 1.7; opacity: 0.85; max-width: 720px; margin-bottom: 64px; }
 
-/* MARKETS */
-#markets{background:var(--bg)}
-.markets-inner{max-width:1100px;margin:0 auto}
-.markets-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:4rem}
-.market-cell{background:var(--bg);padding:2rem;display:flex;align-items:flex-start;gap:1rem;transition:background 0.2s}
-.market-cell:hover{background:var(--surface)}
-.market-abbr{font-family:'Sorts Mill Goudy',serif;font-size:1rem;color:var(--copper);flex-shrink:0;width:2rem}
-.market-name{font-size:0.85rem;font-weight:400;color:var(--cream);margin-bottom:0.3rem}
-.market-desc{font-size:0.75rem;font-weight:300;color:var(--cream-dim);line-height:1.6}
+  /* UAS Consulting Services Section — immediately after hero */
+  .uas-section {
+    background: linear-gradient(180deg, var(--near-black) 0%, var(--near-black-soft) 100%);
+    padding: 140px 0; position: relative; overflow: hidden;
+  }
+  .uas-section::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--copper), transparent);
+    opacity: 0.4;
+  }
+  .uas-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  @media (max-width: 900px) { .uas-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .uas-headline {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(40px, 5.5vw, 68px); line-height: 1.08; letter-spacing: -0.015em;
+  }
+  .uas-headline .emphasis { font-style: italic; color: var(--copper); }
+  .uas-body {
+    font-size: 18px; line-height: 1.7; opacity: 0.9; margin-bottom: 32px;
+  }
+  .uas-body p + p { margin-top: 20px; }
+  .uas-industries-list {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px;
+  }
+  .uas-tag {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 8px 14px; border: 1px solid rgba(200,168,106,0.4); color: var(--copper);
+  }
+  .uas-cta {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 18px 36px; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500;
+    background: var(--copper); color: var(--near-black);
+    transition: all 0.25s;
+  }
+  .uas-cta:hover { background: var(--cream); transform: translateY(-2px); }
+  .uas-cta-arrow { transition: transform 0.25s; }
+  .uas-cta:hover .uas-cta-arrow { transform: translateX(6px); }
 
-/* TEAM */
-#team{background:var(--surface);position:relative}
-.team-inner{max-width:1100px;margin:0 auto}
-.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:4rem}
-.team-card{background:var(--surface);padding:3rem}
-.team-initials{width:52px;height:52px;border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Sorts Mill Goudy',serif;font-size:1rem;color:var(--copper);margin-bottom:1.5rem}
-.team-name{font-family:'Sorts Mill Goudy',serif;font-size:1.4rem;color:var(--cream);margin-bottom:0.3rem}
-.team-role{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--copper);margin-bottom:1.5rem}
-.team-bio{font-size:0.875rem;font-weight:300;color:var(--cream-dim);line-height:1.85}
+  /* Problem section */
+  .problem-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-bottom: 80px;
+  }
+  @media (max-width: 900px) { .problem-stats { grid-template-columns: repeat(2, 1fr); } }
+  .stat {
+    padding: 32px 24px; border: 1px solid rgba(200,168,106,0.2);
+    background: rgba(26,23,19,0.5);
+  }
+  .stat-num {
+    font-family: var(--serif); font-size: 56px; line-height: 1; color: var(--copper); margin-bottom: 12px;
+  }
+  .stat-label { font-size: 13px; line-height: 1.5; opacity: 0.8; }
+  .problem-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 800px) { .problem-list { grid-template-columns: 1fr; } }
+  .problem-list li { display: flex; gap: 20px; padding: 24px; background: rgba(26,23,19,0.4); }
+  .problem-list .num { font-family: var(--serif); color: var(--copper); font-size: 20px; min-width: 28px; }
+  .problem-list .text { font-size: 15px; line-height: 1.65; opacity: 0.85; }
+  .problem-list .text strong { color: var(--copper); font-weight: 500; display: block; margin-bottom: 4px; }
 
-/* ENGAGE */
-#engage{background:var(--bg);position:relative;overflow:hidden}
-.engage-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%, rgba(200,168,106,0.04) 0%, transparent 60%)}
-.engage-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
-.engage-left{}
-.engage-body{font-size:1rem;font-weight:300;color:var(--cream-dim);line-height:1.9;margin-bottom:2rem}
-.engage-body em{color:var(--cream);font-style:italic}
-.engage-details{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
-.engage-detail{display:flex;gap:1rem;align-items:flex-start}
-.ed-label{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--copper);flex-shrink:0;width:80px;padding-top:0.1rem}
-.ed-val{font-size:0.875rem;font-weight:300;color:var(--cream-dim)}
-.form-group{margin-bottom:1.25rem}
-.form-group label{display:block;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--copper-dim);margin-bottom:0.5rem}
-.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--surface);border:0.5px solid var(--border);color:var(--cream);font-family:'DM Sans',sans-serif;font-weight:300;font-size:0.9rem;padding:0.85rem 1rem;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--copper)}
-.form-group textarea{resize:vertical;min-height:120px}
-.form-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a7a56'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;cursor:pointer}
-.form-group select option{background:#1a1713}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.form-submit{width:100%;background:var(--copper);color:var(--bg);font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;padding:1.1rem;border:none;cursor:pointer;transition:opacity 0.2s;margin-top:0.5rem}
-.form-submit:hover{opacity:0.88}
-.form-note{font-size:0.7rem;color:var(--cream-dim);margin-top:0.75rem;line-height:1.6}
-.onepager-cta{display:flex;align-items:center;gap:1rem;margin-top:2.5rem;padding:1.25rem;border:0.5px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s;cursor:pointer}
-.onepager-cta:hover{border-color:var(--copper-dim);background:var(--surface-2)}
-.op-icon{width:36px;height:36px;border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.op-icon svg{width:16px;height:16px;stroke:var(--copper);fill:none;stroke-width:1.5}
-.op-text{}
-.op-label{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--copper);display:block}
-.op-desc{font-size:0.75rem;color:var(--cream-dim);display:block;margin-top:0.15rem}
+  /* Portfolio */
+  .port-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+  @media (max-width: 900px) { .port-grid { grid-template-columns: 1fr; } }
+  .port-card {
+    padding: 40px; border: 1px solid rgba(200,168,106,0.2); background: rgba(26,23,19,0.6);
+    display: flex; flex-direction: column; min-height: 320px;
+  }
+  .port-tag { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--copper); margin-bottom: 24px; }
+  .port-name { font-family: var(--serif); font-size: 40px; margin-bottom: 8px; }
+  .port-sub { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; margin-bottom: 24px; }
+  .port-desc { font-size: 14px; line-height: 1.65; opacity: 0.85; flex: 1; margin-bottom: 24px; }
+  .port-link { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--copper); }
 
-/* FOOTER */
-footer{border-top:0.5px solid var(--border);padding:2.5rem 3rem;display:flex;align-items:center;justify-content:space-between;background:var(--bg)}
-.footer-brand{font-family:'Sorts Mill Goudy',serif;font-size:0.85rem;color:var(--copper-dim)}
-.footer-links{display:flex;gap:2rem}
-.footer-links a{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream-dim);transition:color 0.2s}
-.footer-links a:hover{color:var(--copper)}
-.footer-copy{font-size:0.65rem;color:var(--cream-dim);letter-spacing:0.05em}
+  /* Consulting phases */
+  .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .phases { grid-template-columns: 1fr; } }
+  .phase { padding: 40px; border: 1px solid rgba(200,168,106,0.2); background: rgba(26,23,19,0.4); }
+  .phase-num { font-family: var(--serif); font-size: 14px; letter-spacing: 0.3em; color: var(--copper); margin-bottom: 20px; }
+  .phase-name { font-family: var(--serif); font-size: 28px; margin-bottom: 16px; }
+  .phase-desc { font-size: 14px; line-height: 1.65; opacity: 0.85; margin-bottom: 24px; }
+  .phase-deliv { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding-top: 20px; border-top: 1px solid rgba(200,168,106,0.15); color: var(--copper); }
 
-/* DIVIDER LINE */
-.copper-line{width:40px;height:0.5px;background:var(--copper);margin-bottom:2rem}
+  /* Capabilities */
+  .caps { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 900px) { .caps { grid-template-columns: 1fr; } }
+  .cap { padding: 40px; border: 1px solid rgba(200,168,106,0.2); background: rgba(26,23,19,0.4); }
+  .cap-num { font-family: var(--serif); font-size: 14px; letter-spacing: 0.3em; color: var(--copper); margin-bottom: 20px; }
+  .cap-name { font-family: var(--serif); font-size: 28px; line-height: 1.2; margin-bottom: 20px; }
+  .cap-desc { font-size: 15px; line-height: 1.7; opacity: 0.88; margin-bottom: 24px; }
+  .cap-desc em { color: var(--copper); font-style: italic; }
+  .cap-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .cap-tag { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 12px; border: 1px solid rgba(200,168,106,0.3); color: var(--copper); }
 
-/* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  /* Markets */
+  .markets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .markets { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .markets { grid-template-columns: 1fr; } }
+  .market { padding: 32px 28px; border: 1px solid rgba(200,168,106,0.2); background: rgba(26,23,19,0.4); transition: all 0.3s; }
+  .market:hover { border-color: var(--copper); background: rgba(26,23,19,0.7); transform: translateY(-3px); }
+  .market-code { font-family: var(--serif); font-size: 14px; letter-spacing: 0.3em; color: var(--copper); margin-bottom: 20px; }
+  .market-name { font-family: var(--serif); font-size: 22px; line-height: 1.25; margin-bottom: 14px; }
+  .market-desc { font-size: 14px; line-height: 1.6; opacity: 0.82; }
 
-/* SCROLL REVEAL */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal.visible{opacity:1;transform:none}
-.reveal-delay-1{transition-delay:0.1s}
-.reveal-delay-2{transition-delay:0.2s}
-.reveal-delay-3{transition-delay:0.3s}
+  /* Team */
+  .team { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 800px) { .team { grid-template-columns: 1fr; } }
+  .person { padding: 40px; border: 1px solid rgba(200,168,106,0.2); background: rgba(26,23,19,0.4); }
+  .person-initials { font-family: var(--serif); font-size: 40px; color: var(--copper); margin-bottom: 20px; }
+  .person-name { font-family: var(--serif); font-size: 28px; margin-bottom: 4px; }
+  .person-role { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; margin-bottom: 20px; }
+  .person-bio { font-size: 14px; line-height: 1.7; opacity: 0.85; }
 
-/* MOBILE */
-@media(max-width:768px){
-  nav{padding:1.25rem 1.5rem}
-  .nav-links{display:none}
-  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);align-items:center;justify-content:center;gap:2.5rem;z-index:99}
-  .nav-links.open a{font-size:1rem}
-  .nav-mobile-toggle{display:flex;z-index:101;position:relative}
-  #hero{padding:0 1.5rem 5rem}
-  section{padding:5rem 1.5rem}
-  .problem-inner,.engage-inner{grid-template-columns:1fr;gap:3rem}
-  .portfolio-grid,.cap-grid,.team-grid{grid-template-columns:1fr}
-  .markets-grid{grid-template-columns:1fr 1fr}
-  .form-row{grid-template-columns:1fr}
-  footer{flex-direction:column;gap:1.5rem;text-align:center}
-  .footer-links{flex-wrap:wrap;justify-content:center}
-  .hero-scroll{display:none}
-}
+  /* Engage */
+  .engage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+  @media (max-width: 900px) { .engage-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .engage-left .contact { margin-bottom: 32px; }
+  .engage-left .contact-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--copper); margin-bottom: 8px; }
+  .engage-left .contact-value { font-family: var(--serif); font-size: 22px; }
+  .engage-left .download-card { margin-top: 40px; padding: 32px; border: 1px solid rgba(200,168,106,0.3); background: rgba(26,23,19,0.5); }
+  .engage-left .download-card h4 { font-family: var(--serif); font-size: 22px; margin-bottom: 8px; }
+  .engage-left .download-card p { font-size: 13px; opacity: 0.8; margin-bottom: 20px; }
+  .form-group { margin-bottom: 20px; }
+  .form-label { display: block; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--copper); margin-bottom: 8px; }
+  .form-control, textarea.form-control, select.form-control {
+    width: 100%; padding: 14px; font-family: inherit; font-size: 14px; font-weight: 300;
+    background: rgba(26,23,19,0.6); border: 1px solid rgba(200,168,106,0.25); color: var(--cream);
+  }
+  textarea.form-control { resize: vertical; min-height: 120px; }
+  .form-control:focus { outline: none; border-color: var(--copper); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+  /* Footer */
+  .footer { padding: 60px 0 40px; border-top: 1px solid rgba(200,168,106,0.15); }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+  .footer-brand { font-family: var(--serif); font-size: 16px; }
+  .footer-links { display: flex; gap: 28px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75; }
+  .footer-copy { margin-top: 24px; text-align: center; font-size: 11px; opacity: 0.5; letter-spacing: 0.1em; }
+
+  /* ==================== INDUSTRIES SCREEN ==================== */
+  .industries-screen { min-height: 100vh; padding: 140px 0 120px; }
+  .industries-hero {
+    max-width: 900px; margin-bottom: 80px;
+  }
+  .industries-hero .section-title { margin-bottom: 24px; }
+  .industries-back {
+    display: inline-flex; align-items: center; gap: 10px; font-size: 12px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--copper);
+    margin-bottom: 40px; transition: transform 0.2s;
+  }
+  .industries-back:hover { transform: translateX(-4px); }
+  .industries-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+  }
+  @media (max-width: 800px) { .industries-grid { grid-template-columns: 1fr; } }
+  .industry-card {
+    position: relative; padding: 48px 44px; min-height: 280px;
+    border: 1px solid rgba(200,168,106,0.2); background: rgba(26,23,19,0.5);
+    cursor: pointer; transition: all 0.3s; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .industry-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 0; height: 2px;
+    background: var(--copper); transition: width 0.4s;
+  }
+  .industry-card:hover { border-color: var(--copper); background: rgba(26,23,19,0.8); transform: translateY(-4px); }
+  .industry-card:hover::before { width: 100%; }
+  .industry-card-num { font-family: var(--serif); font-size: 14px; letter-spacing: 0.3em; color: var(--copper); margin-bottom: 20px; }
+  .industry-card-name { font-family: var(--serif); font-size: 34px; line-height: 1.1; margin-bottom: 16px; }
+  .industry-card-tagline { font-size: 14px; line-height: 1.6; opacity: 0.85; margin-bottom: 32px; font-style: italic; }
+  .industry-card-cta { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--copper); display: inline-flex; align-items: center; gap: 10px; }
+  .industry-card-cta-arrow { transition: transform 0.25s; }
+  .industry-card:hover .industry-card-cta-arrow { transform: translateX(6px); }
+
+  /* ==================== INDUSTRY DETAIL PAGE ==================== */
+  .industry-detail { min-height: 100vh; padding: 120px 0 80px; }
+  .industry-detail-back {
+    display: inline-flex; align-items: center; gap: 10px; font-size: 12px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--copper);
+    margin-bottom: 40px; transition: transform 0.2s;
+  }
+  .industry-detail-back:hover { transform: translateX(-4px); }
+
+  .id-hero {
+    padding: 60px 0 80px; border-bottom: 1px solid rgba(200,168,106,0.15);
+    margin-bottom: 80px;
+  }
+  .id-eyebrow { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--copper); margin-bottom: 24px; }
+  .id-title {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(44px, 6.5vw, 80px); line-height: 1.05; letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+  .id-title .emphasis { font-style: italic; color: var(--copper); }
+  .id-tagline {
+    font-size: 22px; line-height: 1.5; max-width: 820px;
+    color: var(--cream-soft); font-family: var(--serif); font-style: italic;
+  }
+
+  .id-section { margin-bottom: 80px; }
+  .id-section-label {
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--copper);
+    margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(200,168,106,0.2);
+  }
+  .id-section-head {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(30px, 4vw, 44px); line-height: 1.1; letter-spacing: -0.01em;
+    margin-bottom: 36px;
+  }
+
+  /* Comparison table */
+  .compare-grid {
+    display: grid; grid-template-columns: 180px 1fr 1fr; gap: 0;
+    border: 1px solid rgba(200,168,106,0.25);
+  }
+  @media (max-width: 800px) { .compare-grid { grid-template-columns: 1fr; } }
+  .compare-head {
+    padding: 20px 24px; background: rgba(26,23,19,0.8);
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    border-bottom: 1px solid rgba(200,168,106,0.2);
+  }
+  .compare-head.trad { color: rgba(240,232,212,0.7); }
+  .compare-head.drone { color: var(--copper); }
+  .compare-cell {
+    padding: 24px; border-bottom: 1px solid rgba(200,168,106,0.1);
+    font-size: 15px; line-height: 1.55;
+  }
+  .compare-cell.axis {
+    background: rgba(26,23,19,0.6); font-size: 12px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--copper); font-weight: 500;
+  }
+  .compare-cell.trad { opacity: 0.75; }
+  .compare-cell.drone { color: var(--cream); }
+  .compare-cell.drone strong { color: var(--copper); font-weight: 500; }
+  @media (max-width: 800px) {
+    .compare-head { display: none; }
+    .compare-cell.axis { padding-bottom: 8px; border-bottom: none; }
+    .compare-cell.trad::before { content: 'Traditional —'; color: var(--copper); opacity: 0.7; display: block; font-size: 11px; letter-spacing: 0.14em; margin-bottom: 6px; }
+    .compare-cell.drone::before { content: 'Drone —'; color: var(--copper); display: block; font-size: 11px; letter-spacing: 0.14em; margin-bottom: 6px; }
+  }
+
+  /* Quote */
+  .id-quote {
+    padding: 48px 56px; background: rgba(26,23,19,0.6);
+    border-left: 3px solid var(--copper);
+    position: relative;
+  }
+  @media (max-width: 600px) { .id-quote { padding: 36px 32px; } }
+  .id-quote-text {
+    font-family: var(--serif); font-style: italic; font-size: 26px; line-height: 1.4;
+    margin-bottom: 24px; color: var(--cream);
+  }
+  @media (max-width: 600px) { .id-quote-text { font-size: 20px; } }
+  .id-quote-attrib { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--copper); }
+
+  /* Case study / horror story */
+  .id-story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 800px) { .id-story-grid { grid-template-columns: 1fr; } }
+  .id-story {
+    padding: 40px; background: rgba(26,23,19,0.55); border: 1px solid rgba(200,168,106,0.2);
+    display: flex; flex-direction: column;
+  }
+  .id-story.horror { border-color: rgba(180,60,40,0.3); background: rgba(30,15,12,0.5); }
+  .id-story-label {
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--copper); margin-bottom: 16px;
+  }
+  .id-story.horror .id-story-label { color: #d47560; }
+  .id-story-title {
+    font-family: var(--serif); font-size: 24px; line-height: 1.25; margin-bottom: 18px;
+  }
+  .id-story-body { font-size: 15px; line-height: 1.7; opacity: 0.88; flex: 1; }
+  .id-story-body strong { color: var(--copper); font-weight: 500; }
+  .id-story.horror .id-story-body strong { color: #d47560; }
+  .id-story-source { margin-top: 20px; font-size: 11px; letter-spacing: 0.1em; opacity: 0.55; padding-top: 16px; border-top: 1px solid rgba(200,168,106,0.12); }
+
+  /* ROI Calculator */
+  .roi-block {
+    padding: 48px; background: linear-gradient(135deg, rgba(200,168,106,0.08) 0%, rgba(26,23,19,0.6) 100%);
+    border: 1px solid rgba(200,168,106,0.3);
+  }
+  @media (max-width: 600px) { .roi-block { padding: 32px 28px; } }
+  .roi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-bottom: 32px; }
+  @media (max-width: 700px) { .roi-grid { grid-template-columns: 1fr; } }
+  .roi-item { text-align: left; }
+  .roi-num {
+    font-family: var(--serif); font-size: clamp(44px, 6vw, 64px); line-height: 1;
+    color: var(--copper); margin-bottom: 12px;
+  }
+  .roi-label {
+    font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    opacity: 0.85; line-height: 1.5;
+  }
+  .roi-math {
+    font-size: 15px; line-height: 1.7; opacity: 0.88;
+    padding-top: 28px; border-top: 1px solid rgba(200,168,106,0.2);
+  }
+  .roi-math strong { color: var(--copper); font-weight: 500; }
+
+  /* CTA footer on industry detail */
+  .id-cta-block {
+    margin-top: 80px; padding: 60px 48px;
+    background: linear-gradient(135deg, var(--near-black-soft) 0%, rgba(200,168,106,0.08) 100%);
+    border: 1px solid rgba(200,168,106,0.3);
+    text-align: center;
+  }
+  @media (max-width: 600px) { .id-cta-block { padding: 44px 28px; } }
+  .id-cta-head {
+    font-family: var(--serif); font-size: clamp(30px, 4vw, 44px); line-height: 1.15;
+    letter-spacing: -0.01em; margin-bottom: 20px; max-width: 760px; margin-left: auto; margin-right: auto;
+  }
+  .id-cta-head .emphasis { font-style: italic; color: var(--copper); }
+  .id-cta-sub { font-size: 16px; line-height: 1.7; opacity: 0.85; margin-bottom: 36px; max-width: 620px; margin-left: auto; margin-right: auto; }
+
+  /* Reveal animation */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s, transform 0.7s; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
+<div id="root"></div>
 
-<nav id="nav">
-  <a href="#" class="nav-brand">Card ✦ Lloyd Group</a>
-  <div class="nav-links" id="navLinks">
-    <a href="#portfolio">Portfolio</a>
-    <a href="#consulting">Consulting</a>
-    <a href="#capabilities">Capabilities</a>
-    <a href="#markets">Markets</a>
-    <a href="#team">The Group</a>
-    <a href="#engage" class="nav-cta">Engage</a>
-  </div>
-  <div class="nav-mobile-toggle" id="navToggle" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </div>
-</nav>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
 
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-orb"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">Asset Intelligence Group</div>
-    <h1 class="hero-headline">The infrastructure that runs<br>the world deserves <em>better data.</em></h1>
-    <p class="hero-sub">The Card Lloyd Group is a drone intelligence holding company. We advise organizations on whether and how to deploy unmanned aerial systems — and operate the precision technology businesses that serve large asset owners when they need more than a vendor.</p>
-    <div class="hero-ctas">
-      <a href="#engage" class="btn-primary">Request Capabilities</a>
-      <a href="#portfolio" class="btn-secondary">View Portfolio</a>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="hero-scroll-line"></div>
-  </div>
-</section>
+/* =============================================================
+   INDUSTRY DATA — built from the CLG Drone Intelligence Report
+   ============================================================= */
 
-<div class="ticker">
-  <div class="ticker-inner">
-    <span class="ticker-item"><strong>PSEG Partner</strong></span>
-    <span class="ticker-item">Patented Drone Application System</span>
-    <span class="ticker-item"><strong>3D Thermal Intelligence</strong></span>
-    <span class="ticker-item">ESG Documentation</span>
-    <span class="ticker-item"><strong>REITs · Stadiums · Healthcare · Government</strong></span>
-    <span class="ticker-item">Nano Coating Technology</span>
-    <span class="ticker-item"><strong>In-House AI Platform</strong></span>
-    <span class="ticker-item">Marine & Cruise</span>
-    <span class="ticker-item"><strong>Precision by Design</strong></span>
-    <span class="ticker-item">Insurance Documentation</span>
-    <span class="ticker-item"><strong>PSEG Partner</strong></span>
-    <span class="ticker-item">Patented Drone Application System</span>
-    <span class="ticker-item"><strong>3D Thermal Intelligence</strong></span>
-    <span class="ticker-item">ESG Documentation</span>
-    <span class="ticker-item"><strong>REITs · Stadiums · Healthcare · Government</strong></span>
-    <span class="ticker-item">Nano Coating Technology</span>
-    <span class="ticker-item"><strong>In-House AI Platform</strong></span>
-    <span class="ticker-item">Marine & Cruise</span>
-    <span class="ticker-item"><strong>Precision by Design</strong></span>
-    <span class="ticker-item">Insurance Documentation</span>
-  </div>
-</div>
-
-<section id="problem">
-  <div class="problem-inner">
-    <div class="problem-left reveal">
-      <div class="section-label">The Problem</div>
-      <h2 class="section-title">Large asset owners are making billion-dollar decisions on <em>incomplete data.</em></h2>
-      <p class="problem-body">HVAC systems consuming 40% of commercial energy while envelope failures go undetected for years. Roof systems carrying ponding water that no one has quantified. Drone vendors collecting data that no one can interpret. Maintenance crews applying coatings that degrade in 18 months.</p>
-      <p class="problem-body">The cost isn't the vendor bill. <em>The cost is what you didn't know.</em></p>
-      <div class="stat-grid">
-        <div class="stat-cell">
-          <div class="stat-num">40%</div>
-          <div class="stat-label">of commercial energy consumed by HVAC</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-num">30%</div>
-          <div class="stat-label">avg. avoidable waste in poorly maintained envelopes</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-num">10×</div>
-          <div class="stat-label">cost of reactive roof repair vs. early intervention</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-num">100%</div>
-          <div class="stat-label">defensible data for ESG and insurance</div>
-        </div>
-      </div>
-    </div>
-    <div class="problem-right reveal reveal-delay-2">
-      <ul class="problem-list">
-        <li>
-          <span class="pl-num">01</span>
-          <span class="pl-text"><strong>Energy loss goes undetected.</strong> Thermal bridges, failed insulation, and air infiltration points are invisible to ground-based inspection — and cost asset owners millions annually in avoidable HVAC spend.</span>
-        </li>
-        <li>
-          <span class="pl-num">02</span>
-          <span class="pl-text"><strong>Roof failures are predictable — and preventable.</strong> Ponding water adds structural load, accelerates membrane degradation, and precedes catastrophic failure. We identify it years before it becomes a capital event.</span>
-        </li>
-        <li>
-          <span class="pl-num">03</span>
-          <span class="pl-text"><strong>Drone spend is largely wasted.</strong> Most organizations deploy drone operators who collect data no one can use. The technology is sound. The operators and the strategy behind them rarely are.</span>
-        </li>
-        <li>
-          <span class="pl-num">04</span>
-          <span class="pl-text"><strong>ESG documentation lacks teeth.</strong> Boards, insurers, and regulators require defensible data — not estimates. Most sustainability reporting cannot survive scrutiny.</span>
-        </li>
-        <li>
-          <span class="pl-num">05</span>
-          <span class="pl-text"><strong>Asset surfaces degrade faster than they should.</strong> Without proper protective coatings applied correctly at scale, oxidation, biological fouling, and UV degradation compress asset service life and inflate maintenance costs.</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="portfolio">
-  <div class="portfolio-inner">
-    <div class="reveal">
-      <div class="section-label">Portfolio</div>
-      <h2 class="section-title">We build and acquire businesses<br>operating where <em>infrastructure meets intelligence.</em></h2>
-      <p class="portfolio-intro">Our portfolio companies serve asset owners who require more than a vendor — they require a strategic partner with the technology, the data, and the discipline to deliver measurable outcomes.</p>
-    </div>
-    <div class="portfolio-grid reveal reveal-delay-1" style="grid-template-columns:1fr 1fr 1fr">
-      <div class="portfolio-card">
-        <div class="portfolio-card-tag">Acquired 2024 &nbsp;·&nbsp; Operating Company</div>
-        <div class="portfolio-card-name">Aeras</div>
-        <div class="portfolio-card-type">Exterior Cleaning & Restoration</div>
-        <div class="portfolio-card-desc">Industrial-scale exterior cleaning and restoration for the assets that matter most. Trusted by PSEG and proven across stadiums, arenas, REITs, hospitals, hotels, universities, and large commercial portfolios. Aeras brings the equipment capacity, safety protocols, and operational discipline that large asset owners require — and that most vendors cannot match.</div>
-        <a href="https://aerasfog.com" target="_blank" class="portfolio-card-link">Visit Aeras →</a>
-      </div>
-      <div class="portfolio-card-coming">
-        <div class="pc-label">Strategic Referral Partner</div>
-        <div class="pc-text" style="font-size:1.2rem;margin-bottom:1rem">EarthEx</div>
-        <p style="font-size:0.8rem;font-weight:300;color:var(--cream-dim);line-height:1.7;margin-bottom:1.5rem">Mineral exploration and geophysical services. CLG acts as business development partner for EarthEx, connecting qualified clients and earning a commission on secured engagements.</p>
-        <a href="#engage" class="portfolio-card-link">Inquire via CLG →</a>
-      </div>
-      <div class="portfolio-card-coming">
-        <div class="pc-label">Acquisition Pipeline</div>
-        <div class="pc-text">The next Card Lloyd Group company is identified by one criterion — does it deliver measurable outcomes to large asset owners that no incumbent can replicate?</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="consulting" style="background:var(--bg)">
-  <div style="max-width:1100px;margin:0 auto">
-    <div class="reveal">
-      <div class="section-label">Consulting Framework</div>
-      <h2 class="section-title">Our advisory process follows<br>a disciplined <em>three-phase structure.</em></h2>
-      <p style="font-size:1rem;font-weight:300;color:var(--cream-dim);line-height:1.9;max-width:620px;margin-bottom:3rem">Every CLG consulting engagement begins with one question: does drone technology generate defensible ROI for your specific assets, operations, and objectives? We answer that question before we recommend anything else.</p>
-    </div>
-    <div class="reveal reveal-delay-1" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border)">
-      <div style="background:var(--surface);padding:2.5rem;position:relative">
-        <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--copper);margin-bottom:1rem">Phase I</div>
-        <div style="font-family:'Sorts Mill Goudy',serif;font-size:1.3rem;color:var(--cream);margin-bottom:1rem;line-height:1.3">Strategic Assessment</div>
-        <p style="font-size:0.875rem;font-weight:300;color:var(--cream-dim);line-height:1.85">We evaluate whether unmanned aerial systems generate defensible ROI for your asset class, operational profile, and strategic objectives. Most organizations receive a clear answer within two weeks of engagement. If the case does not exist, we say so.</p>
-        <div style="margin-top:1.5rem;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--copper-dim)">Deliverable: Go / No-Go Assessment</div>
-      </div>
-      <div style="background:var(--surface-2);padding:2.5rem;border-top:2px solid var(--copper)">
-        <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--copper);margin-bottom:1rem">Phase II</div>
-        <div style="font-family:'Sorts Mill Goudy',serif;font-size:1.3rem;color:var(--cream);margin-bottom:1rem;line-height:1.3">Structural Design</div>
-        <p style="font-size:0.875rem;font-weight:300;color:var(--cream-dim);line-height:1.85">We determine the optimal operating model — proprietary in-house capability development versus third-party deployment — based on data volume, governance requirements, and total cost of ownership. The answer is specific to your organization, not a template recommendation.</p>
-        <div style="margin-top:1.5rem;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--copper-dim)">Deliverable: Operating Model Blueprint</div>
-      </div>
-      <div style="background:var(--surface);padding:2.5rem">
-        <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--copper);margin-bottom:1rem">Phase III</div>
-        <div style="font-family:'Sorts Mill Goudy',serif;font-size:1.3rem;color:var(--cream);margin-bottom:1rem;line-height:1.3">Provider Selection</div>
-        <p style="font-size:0.875rem;font-weight:300;color:var(--cream-dim);line-height:1.85">We conduct independent due diligence, score qualified providers against defined criteria, and deliver a recommendation with no commercial bias. CLG retains no financial interest in any specific operator outcome. Advisory fees are engagement-based.</p>
-        <div style="margin-top:1.5rem;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--copper-dim)">Deliverable: Provider Selection Report</div>
-      </div>
-    </div>
-    <div class="reveal reveal-delay-2" style="margin-top:1px;background:var(--surface);padding:2rem 2.5rem;border-top:0.5px solid var(--border)">
-      <p style="font-size:0.875rem;font-weight:300;color:var(--cream-dim);line-height:1.8;margin:0">When third-party deployment is the right answer, CLG's own operating companies — <span style="color:var(--copper)">Aeras</span>, <span style="color:var(--copper)">ESG</span>, and <span style="color:var(--copper)">Nano</span> — are among the options considered. So are independent operators and referral partners including <span style="color:var(--copper)">EarthEx</span>. Our Phase I and Phase II conclusions are produced before any operating company relationship is introduced.</p>
-    </div>
-  </div>
-</section>
-
-<section id="capabilities">
-  <div class="capabilities-inner">
-    <div class="reveal">
-      <div class="section-label">Capabilities</div>
-      <h2 class="section-title">Five practice areas.<br><em>One standard of precision.</em></h2>
-    </div>
-    <div class="cap-grid">
-      <div class="cap-card reveal">
-        <div class="cap-num">01</div>
-        <div class="cap-title">3D Thermal Scanning & ESG Intelligence</div>
-        <div class="cap-body">Our drone-mounted 3D thermal imaging systems identify energy loss, structural anomalies, and roof water retention with precision no ground-based inspection can replicate. Every finding is quantified in dollars. Every report is defensible for ESG disclosure, insurance documentation, and board-level capital planning. <em>We don't deliver images. We deliver decisions.</em></div>
-        <span class="cap-tag">ESG Reporting</span>
-        <span class="cap-tag">HVAC Savings</span>
-        <span class="cap-tag">Insurance</span>
-        <span class="cap-tag">Government</span>
-      </div>
-      <div class="cap-card reveal reveal-delay-1">
-        <div class="cap-num">02</div>
-        <div class="cap-title">Nano Coating Application</div>
-        <div class="cap-body">CLG holds the only patented electrostatic drone application system for nano coatings at commercial scale. TiO2 and zinc oxide formulations extend asset life, suppress biological growth, and reduce maintenance frequency across large and complex geometries — facades, rooftops, marine hulls — at a fraction of the time and cost of manual application.</div>
-        <span class="cap-tag">Patented System</span>
-        <span class="cap-tag">TiO2</span>
-        <span class="cap-tag">Zinc Oxide</span>
-        <span class="cap-tag">Marine</span>
-      </div>
-      <div class="cap-card reveal reveal-delay-1">
-        <div class="cap-num">03</div>
-        <div class="cap-title">SaaS Platform & AI Asset Intelligence</div>
-        <div class="cap-body">Our in-house server infrastructure powers continuous asset intelligence — not one-time scans. Clients access live dashboards, historical thermal trend data, ESG metric tracking, and AI-generated maintenance recommendations through our proprietary platform. <em>Your asset data never leaves our infrastructure.</em></div>
-        <span class="cap-tag">In-House AI</span>
-        <span class="cap-tag">3D Rendering</span>
-        <span class="cap-tag">Private Data</span>
-        <span class="cap-tag">API Access</span>
-      </div>
-      <div class="cap-card reveal reveal-delay-2">
-        <div class="cap-num">04</div>
-        <div class="cap-title">Drone Strategy & Consulting</div>
-        <div class="cap-body">Large organizations consistently overpay underqualified drone operators or deploy technology where it generates no return. We conduct independent strategic assessments, design optimal operating models, and advise on provider selection — with no financial interest in the outcome. <em>Our only product is the right answer.</em></div>
-        <span class="cap-tag">Strategic Assessment</span>
-        <span class="cap-tag">Structural Design</span>
-        <span class="cap-tag">Provider Selection</span>
-        <span class="cap-tag">Independent</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="markets">
-  <div class="markets-inner">
-    <div class="reveal">
-      <div class="section-label">Markets</div>
-      <h2 class="section-title">Built for those who <em>own at scale.</em></h2>
-    </div>
-    <div class="markets-grid reveal reveal-delay-1">
-      <div class="market-cell">
-        <div class="market-abbr">RE</div>
-        <div>
-          <div class="market-name">REITs & Large Property Owners</div>
-          <div class="market-desc">Systematic asset intelligence across large portfolios. ESG compliance, thermal data, and coating programs that turn assets into managed infrastructure.</div>
-        </div>
-      </div>
-      <div class="market-cell">
-        <div class="market-abbr">ST</div>
-        <div>
-          <div class="market-name">Stadiums, Arenas & Venues</div>
-          <div class="market-desc">High-visibility structures with complex geometries and demanding maintenance schedules. Scale and precision — no downtime, no reputational risk.</div>
-        </div>
-      </div>
-      <div class="market-cell">
-        <div class="market-abbr">HC</div>
-        <div>
-          <div class="market-name">Healthcare & University Campuses</div>
-          <div class="market-desc">Campus-scale portfolios with energy mandates, infection control requirements, and sustainability reporting obligations.</div>
-        </div>
-      </div>
-      <div class="market-cell">
-        <div class="market-abbr">IN</div>
-        <div>
-          <div class="market-name">Insurance Industry</div>
-          <div class="market-desc">Thermal documentation, condition reports, and risk data for underwriters pricing large commercial policies and claims teams processing them.</div>
-        </div>
-      </div>
-      <div class="market-cell">
-        <div class="market-abbr">MR</div>
-        <div>
-          <div class="market-name">Cruise Lines & Marine</div>
-          <div class="market-desc">Hull protection, biofouling reduction, and dry-dock frequency reduction for cruise operators and large commercial fleets.</div>
-        </div>
-      </div>
-      <div class="market-cell">
-        <div class="market-abbr">GV</div>
-        <div>
-          <div class="market-name">Government & Public Sector</div>
-          <div class="market-desc">Federal, state, and municipal portfolios with deferred maintenance liability. We make the penny-saved case with data that survives audit.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="team">
-  <div class="team-inner">
-    <div class="reveal">
-      <div class="section-label">The Group</div>
-      <h2 class="section-title">Founded on <em>expertise.</em></h2>
-    </div>
-    <div class="team-grid reveal reveal-delay-1">
-      <div class="team-card">
-        <div class="team-initials">EL</div>
-        <div class="team-name">Eric Lloyd</div>
-        <div class="team-role">Founder & Business Development</div>
-        <p class="team-bio">Eric founded The Card Lloyd Group to bring precision technology and strategic discipline to an industry long dominated by underqualified operators and missed opportunity. He leads business development, client relationships, and strategic partnerships — translating CLG's technical capabilities into positioned value for the asset owners, facility managers, and executives who need it most.</p>
-      </div>
-      <div class="team-card">
-        <div class="team-initials">DC</div>
-        <div class="team-name">Daniel Card</div>
-        <div class="team-role">Partner & Technology</div>
-        <p class="team-bio">Daniel brings deep technical expertise across drone systems, data acquisition, and AI-driven asset analysis. He oversees CLG's technology infrastructure, platform development, and the engineering discipline behind our thermal scanning, nano coating application, and SaaS capabilities. His approach: every system should do what it claims, and every claim should be backed by data.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="engage">
-  <div class="engage-bg"></div>
-  <div class="engage-inner">
-    <div class="engage-left reveal">
-      <div class="section-label">Engage the Group</div>
-      <h2 class="section-title">Ready to stop leaving <em>money behind?</em></h2>
-      <p class="engage-body">If you manage assets at scale, we have something worth your 30 minutes. Request our capabilities brief or start a conversation directly.<br><br>We do not use sales development representatives. <em>You will speak with a principal.</em></p>
-      <div class="engage-details">
-        <div class="engage-detail">
-          <span class="ed-label">Email</span>
-          <span class="ed-val"><a href="mailto:contact@thecardlloydgroup.com" style="color:var(--copper-dim)">contact@thecardlloydgroup.com</a></span>
-        </div>
-        <div class="engage-detail">
-          <span class="ed-label">Location</span>
-          <span class="ed-val">United States</span>
-        </div>
-      </div>
-      <div class="onepager-cta" onclick="alert('Capabilities brief coming soon.')">
-        <div class="op-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="12 2 12 8 18 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-        </div>
-        <div class="op-text">
-          <span class="op-label">Download Capabilities Brief</span>
-          <span class="op-desc">One-page overview of CLG services and portfolio</span>
-        </div>
-      </div>
-    </div>
-    <div class="engage-right reveal reveal-delay-2">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="fname">First Name</label>
-          <input type="text" id="fname" placeholder="First name">
-        </div>
-        <div class="form-group">
-          <label for="lname">Last Name</label>
-          <input type="text" id="lname" placeholder="Last name">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="org">Organization</label>
-        <input type="text" id="org" placeholder="Company or institution">
-      </div>
-      <div class="form-group">
-        <label for="role">Role</label>
-        <select id="role">
-          <option value="" disabled selected>Select your role</option>
-          <option>C-Suite / Executive</option>
-          <option>Facility / Property Management</option>
-          <option>Sustainability / ESG</option>
-          <option>Insurance / Risk</option>
-          <option>Government / Public Sector</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="your@email.com">
-      </div>
-      <div class="form-group">
-        <label for="message">How can we help?</label>
-        <textarea id="message" placeholder="Describe your assets, your challenge, or what you're looking to accomplish."></textarea>
-      </div>
-      <button class="form-submit" onclick="handleSubmit()">Send Inquiry</button>
-      <p class="form-note">We review every inquiry personally and respond within one business day.</p>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-brand">The Card Lloyd Group &nbsp;·&nbsp; Precision by Design</div>
-  <div class="footer-links">
-    <a href="#portfolio">Portfolio</a>
-    <a href="#capabilities">Capabilities</a>
-    <a href="#markets">Markets</a>
-    <a href="#team">The Group</a>
-    <a href="https://aerasfog.com" target="_blank">Aeras</a>
-  </div>
-  <div class="footer-copy">© 2026 The Card Lloyd Group</div>
-</footer>
-
-<script>
-// Nav scroll
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-});
-
-// Mobile nav
-const toggle = document.getElementById('navToggle');
-const links = document.getElementById('navLinks');
-toggle.addEventListener('click', () => {
-  links.classList.toggle('open');
-});
-links.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => links.classList.remove('open'));
-});
-
-// Scroll reveal
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
+const INDUSTRIES = {
+  'construction-real-estate': {
+    slug: 'construction-real-estate',
+    number: '01',
+    name: 'Construction & Commercial Real Estate',
+    cardTagline: 'Every day a project runs over budget is a day a drone could have prevented.',
+    heroTitle: ['Every day a project runs over budget is a day a ', 'drone could have prevented.'],
+    heroSub: 'U.S. construction projects run 20% over budget and 20% over schedule on average. Most of that variance is invisible — built silently through measurement errors, coordination failures, and deviations from design plans that nobody catches until the concrete is poured.',
+    compare: {
+      cost: {
+        trad: 'Topographic survey: 3–4 surveyors × 3–4 days on site at ~$1,000/day. Quantity disputes routinely end in arbitration.',
+        drone: '<strong>50–75% survey cost reduction.</strong> WVDOT documented <strong>90% savings</strong> on stockpile surveys. Balfour Beatty compressed a full day of fieldwork to a 15-minute flight plus 2-hour processing.'
+      },
+      time: {
+        trad: '20-acre site: 3–4 days of fieldwork, plus 1 additional week of processing. Repeat surveys quarterly at best.',
+        drone: '<strong>Same 20-acre site flown and results delivered the same day.</strong> DJI M300 RTK covers 7.5 km² per day. Weekly resurveys become economically trivial.'
+      },
+      safety: {
+        trad: 'Surveyors traverse active jobsites, heavy equipment zones, unstable excavated terrain, and in some environments, contaminated soils.',
+        drone: 'Operator works from a safe perimeter. Fall and equipment-strike exposure on the survey task drops to zero.'
+      },
+      precision: {
+        trad: 'Hundreds of measurement points. Field notes and 2D plat maps. Truck-count volumetrics that routinely end in quantity disputes.',
+        drone: 'Millions of measurement points per flight. GPS-verified volumetrics. Cuts documented quantity variance by roughly 5%. Objective, dispute-ending data.'
+      }
+    },
+    quote: {
+      text: 'Using drones, we can literally take weeks out of the schedule, our projects are much higher quality than before, and they are safer.',
+      attrib: 'Jim Gorrie, CEO — Brasfield & Gorrie'
+    },
+    caseStudy: {
+      label: 'Case Study',
+      title: 'WVDOT — 90% Cost Savings on Stockpile Surveys',
+      body: 'The West Virginia Department of Transportation replaced traditional stockpile surveys with drone photogrammetry. The result: a <strong>90% reduction in per-survey cost</strong> and volumetric measurements accurate to within a few cubic yards — replacing the truck-count estimates that had been the source of years of contractor disputes.',
+      source: 'Source: West Virginia DOT Drone Program Report'
+    },
+    horror: {
+      label: 'The Traditional Approach',
+      title: 'A $114,000 Mistake You Make Every Year',
+      body: 'For a portfolio operator running 10 active sites with 5 traditional surveys per year per site, drone surveying delivers approximately <strong>$114,000 in annual savings</strong> — before counting the litigation exposure eliminated by GPS-verified volumetrics and the safety claims prevented by removing surveyors from active construction zones. Every year you wait is six figures you left on the ground.',
+      source: 'Source: Industry cost modeling, drone vs. traditional survey economics'
+    },
+    roi: {
+      items: [
+        { num: '50–75%', label: 'Survey Cost Reduction' },
+        { num: '$114K', label: 'Annual Savings — 10 Sites, 5 Surveys/Yr' },
+        { num: '15 min', label: 'Flight Time Replacing a Full Day of Fieldwork' }
+      ],
+      math: 'For a mid-sized commercial GC running 10 active sites at 5 surveys per site per year, the math is simple: <strong>50–75% per-survey cost reduction</strong> compounded across 50 annual surveys delivers six figures in direct operating savings. The quantity-dispute exposure — a documented source of construction litigation — is eliminated by objective GPS-verified volumetrics. The surveyor injury exposure on steep, unstable, or equipment-heavy terrain is eliminated entirely.'
     }
-  });
-}, { threshold: 0.1 });
-reveals.forEach(el => observer.observe(el));
+  },
 
-// Form submit
-function handleSubmit() {
-  const fname = document.getElementById('fname').value;
-  const email = document.getElementById('email').value;
-  if (!fname || !email) {
-    alert('Please provide your name and email.');
-    return;
+  'renewable-energy': {
+    slug: 'renewable-energy',
+    number: '02',
+    name: 'Renewable Energy',
+    cardTagline: 'Inspecting 150 feet of spinning blade without shutting anything down.',
+    heroTitle: ['A wind turbine blade is 150 feet long at the top of a 300-foot tower. A drone inspects all three ', 'in 18 minutes.'],
+    heroSub: 'Traditional blade inspection requires shutting the turbine down, rigging rope access technicians at altitude, or flying a helicopter close enough to capture usable imagery. Every option costs a fortune and puts someone in danger. Solar arrays silently lose 10–20% of output to undetected hotspots before anyone notices. Drones solve both with one platform.',
+    compare: {
+      cost: {
+        trad: 'Rope access turbine blade inspection: $1,500–$4,000 per turbine. Helicopter flyovers priced at enormous cost for inferior imagery.',
+        drone: '<strong>$300–$800 per turbine.</strong> Solar farms save up to <strong>$1,717 per megawatt</strong> vs. manual thermal scanning. Sky-Futures documented <strong>80% cost savings</strong> on North Sea offshore assets.'
+      },
+      time: {
+        trad: '3–6 hours per turbine with full shutdown. 2–4 turbines per day per rope crew. Solar: 1–5 MW per day manual thermal.',
+        drone: '<strong>18 minutes per turbine.</strong> No shutdown — blades parked, turbine continues operating. <strong>18–20 turbines per day</strong> per drone team. <strong>100+ MW per day</strong> solar coverage.'
+      },
+      safety: {
+        trad: 'Rope access technicians working at 300+ feet in ambient wind. Falls from turbines are a documented, ongoing fatality category in the renewable sector.',
+        drone: 'Operator stands at ground level. Rope access fatalities and the workers\' comp catastrophe they trigger are eliminated from the routine inspection workflow.'
+      },
+      precision: {
+        trad: 'Limited vantage points. Climber fatigue at altitude. No thermal data. Missed hotspots silently reduce solar farm output 10–20%.',
+        drone: '4K visual plus thermal plus zoom on every millimeter of every blade surface. AI-tagged defect reports feed directly into O&M systems.'
+      }
+    },
+    quote: {
+      text: 'The drone captured defects at the blade root that our rope access inspection missed the previous cycle. We would have run that turbine to catastrophic failure.',
+      attrib: 'Operations Lead — Renewable Energy Operator (industry case study)'
+    },
+    caseStudy: {
+      label: 'Case Study',
+      title: 'ArthWind + DJI — 3–6 Hours Compressed to 18 Minutes',
+      body: 'Using the DJI Matrice 300 RTK with Clobotics IBIS, ArthWind reduced single-turbine inspection from 3–6 hours of rope access time to <strong>18 minutes</strong> per turbine. SkyVisor customers now inspect <strong>18–20 turbines per day</strong> on average — a throughput increase of roughly 5× with zero personnel at altitude.',
+      source: 'Source: ArthWind / DJI Case Study'
+    },
+    horror: {
+      label: 'The Traditional Approach',
+      title: 'One Rope Access Fatality Ends a Contractor',
+      body: 'A single fatality at a wind turbine site triggers workers\' comp claims, GL exposure, an OSHA investigation, and reputational harm that can cost an O&M contractor their operating license. The average drone inspection costs $300–$800 per turbine. Rope access is $1,500–$4,000. <strong>The drone program pays for itself before you even count the catastrophic injury exposure it eliminates.</strong>',
+      source: 'Source: Renewable energy sector safety documentation'
+    },
+    roi: {
+      items: [
+        { num: '80%', label: 'Cost Savings — North Sea Offshore (Sky-Futures)' },
+        { num: '$1,717/MW', label: 'Saved on Solar vs. Manual Thermal' },
+        { num: '18 min', label: 'Turbine Inspection — Down From 3–6 Hours' }
+      ],
+      math: 'For an operator running 50 turbines on a biannual inspection cycle, rope access runs ~$200,000 per cycle at the low end. Drone inspection of the same fleet runs $30,000–$80,000. The per-cycle saving is <strong>$120K–$170K</strong> — before counting zero downtime, zero rope fatalities, and defect detection at the blade root that rope inspectors routinely miss. <strong>72% of global renewable operators already report that drone ROI is superior to traditional methods.</strong>'
+    }
+  },
+
+  'resource-exploration': {
+    slug: 'resource-exploration',
+    number: '03',
+    name: 'Resource Exploration',
+    cardTagline: 'Mapping terrain no geologist should have to walk.',
+    heroTitle: ['Every survey kilometer you walk is a survey kilometer you should have ', 'flown.'],
+    heroSub: 'Resource exploration puts geologists and survey crews on terrain that is remote, unstable, and in many regions, hazardous. Traditional methods take days to cover what a drone can map in hours, at centimeter-level accuracy, with magnetometer and LiDAR payloads that deliver subsurface intelligence no ground crew can replicate.',
+    compare: {
+      cost: {
+        trad: 'Field crews operating remote terrain at multi-day engagements. Helicopter-based magnetic and LiDAR survey: $800–$1,500 per mile.',
+        drone: '<strong>70–80% reduction in per-survey cost.</strong> Drone magnetometer and LiDAR payloads deliver equivalent or superior resolution at a fraction of the mobilization cost.'
+      },
+      time: {
+        trad: '500-acre topographic survey: 3–5 days with a field crew. Magnetic survey lines flown by helicopter at significant per-hour cost.',
+        drone: '<strong>90-minute fixed-wing flight</strong> covers the same 500 acres. Survey-grade 3D elevation models processed within hours. Marginal cost per repeat pass is near zero.'
+      },
+      safety: {
+        trad: 'Crews traversing unstable terrain, post-rain slopes, and in some regions exposure to illegal mining and armed security incidents.',
+        drone: 'Operator works from a safe staging position. Zero ground presence in the survey area. Ground team deployed only after the drone confirms what is out there.'
+      },
+      precision: {
+        trad: '2D plat maps with hand-drawn elevation contours. Traditional grid-based geochem sampling with wide uncertainty bands.',
+        drone: 'Centimeter-accurate 3D point clouds, true-color orthomosaics, DEMs, magnetometer anomaly layers. GIS-native exports for direct integration into exploration models.'
+      }
+    },
+    quote: {
+      text: 'What took our crew a full field season to map, a drone team flew in a week. The data resolution was an order of magnitude better than anything we had.',
+      attrib: 'Chief Geologist — Mining Exploration Firm (industry case study)'
+    },
+    caseStudy: {
+      label: 'Case Study',
+      title: 'Wingtra / senseFly — Survey-Grade Mapping at Scale',
+      body: 'Fixed-wing VTOL drone platforms now deliver <strong>survey-grade orthomosaics at 3–5 cm resolution</strong> — versus the 100–400 inches per pixel typical of satellite imagery used for regional exploration. A single 90-minute flight produces georeferenced 3D point clouds, digital elevation models, and GIS point clouds ready for direct import into exploration modeling software.',
+      source: 'Source: Wingtra / senseFly (AgEagle) enterprise case library'
+    },
+    horror: {
+      label: 'The Traditional Approach',
+      title: 'A Season Lost to Weather',
+      body: 'Traditional exploration field programs are single-shot: crew mobilized, season scheduled, budget committed. A two-week weather delay or a single serious field injury can compress the active survey window by <strong>30–50%</strong>, forcing decisions on incomplete data or a second mobilization at full cost. Drone programs repeat on demand at marginal cost. The operational difference between reactive and continuous exploration is measured in discovery probability.',
+      source: 'Source: Industry exploration program analysis'
+    },
+    roi: {
+      items: [
+        { num: '70%', label: 'Data Collection Time Reduction' },
+        { num: '3–5 cm', label: 'Resolution vs. 100–400 in (Satellite)' },
+        { num: '100%', label: 'Coverage vs. Sampled Estimate' }
+      ],
+      math: 'For an exploration firm running a single 500-acre target survey: traditional methods consume 3–5 field days at ~$2,000–$3,000 per day plus mobilization. Drone survey covers the same area in <strong>a 90-minute flight</strong> with same-day processing. At repeat-survey frequency, drone economics turn regional exploration from a once-per-season commitment into a continuous monitoring capability — the single largest unlock in exploration productivity since the introduction of GIS.'
+    }
+  },
+
+  'oil-gas': {
+    slug: 'oil-gas',
+    number: '04',
+    name: 'Oil & Gas',
+    cardTagline: 'Inspecting 2.7 million miles of pipeline without putting a human on it.',
+    heroTitle: ['There are 2.7 million miles of U.S. pipeline. A single missed anomaly is a ', '$340 million event.'],
+    heroSub: 'Pipeline field inspection exposes crews to blowout zones, toxic gas environments, and emergency evacuation timelines measured in hours. Missed detections carry catastrophic liability. Offshore platforms are worse. Every one of these inspections is now a drone job.',
+    compare: {
+      cost: {
+        trad: 'Ground pipeline inspection: $2,000–$3,000 per team per day. Offshore platform rope access: highest-cost inspection category in energy operations.',
+        drone: '<strong>$500–$800 per day</strong> for equivalent or greater coverage. <strong>70–80% direct cost reduction.</strong> Sky-Futures documented <strong>80% cost savings</strong> on North Sea offshore assets.'
+      },
+      time: {
+        trad: '1–5 pipeline miles per day per ground crew. Offshore inspections require scaffolding, shutdowns, and crew transport at multi-day cost.',
+        drone: '<strong>50–100 pipeline miles per day</strong> at 40–60 mph corridor speed. <strong>75–85% per-mile inspection time reduction.</strong> Real-time engineer review from any location.'
+      },
+      safety: {
+        trad: 'Ground crews in remote, potentially toxic environments. Rope access on live offshore platforms. Emergency response windows measured in hours.',
+        drone: 'Zero field presence in the inspection corridor. Zero rope access on platforms. Thermal and methane-sensor payloads that human inspectors cannot match.'
+      },
+      precision: {
+        trad: 'Visual inspection from accessible vantage points. No thermal overlay. No methane sensing. No trend data without repeat field mobilization.',
+        drone: '4K visual plus thermal plus methane-sensor payloads. GPS-tagged, time-coded, forensically admissible imagery. AI-tagged anomaly reports feed asset management systems directly.'
+      }
+    },
+    quote: {
+      text: 'The drone program found 847 potential failure points in a single year. Proactive remediation cost $12 million. The estimated cost of allowing those points to reach incident status was $340 million.',
+      attrib: 'Pacific Gas & Electric — Pipeline Monitoring Program, 2022'
+    },
+    caseStudy: {
+      label: 'Case Study',
+      title: 'PG&E — 28:1 Return on Drone Pipeline Inspection',
+      body: 'Pacific Gas and Electric deployed drones to monitor thousands of miles of gas pipelines. In 2022 alone, the early detection program identified <strong>847 potential failure points</strong>. Proactive remediation cost $12 million. The estimated cost of allowing those failure points to reach incident status: <strong>$340 million</strong>. A <strong>28:1 return</strong> on the drone inspection investment — and a catastrophic liability event prevented.',
+      source: 'Source: PG&E drone inspection program reporting'
+    },
+    horror: {
+      label: 'The Traditional Approach',
+      title: 'The Inspection You Skipped Is the Lawsuit You Get',
+      body: 'A pipeline failure preceded by uninspected anomalies is a legal and regulatory disaster of the first order. Traditional ground inspection covers 1–5 miles per day per team — meaning large networks go months between passes by design. <strong>Drones cover 50–100 miles per day at one-third the cost.</strong> Every quarter a network goes uninspected is a quarter the carrier and counsel will ask about when the incident report is filed.',
+      source: 'Source: Pipeline safety regulatory analysis'
+    },
+    roi: {
+      items: [
+        { num: '28:1', label: 'ROI — PG&E Pipeline Program' },
+        { num: '80%', label: 'Cost Savings — North Sea Offshore' },
+        { num: '75–85%', label: 'Inspection Time Reduction Per Mile' }
+      ],
+      math: 'For a midstream operator with 5,000 pipeline miles on an annual inspection cycle: traditional inspection at 3 miles per day per team requires ~1,667 team-days per year. Drone inspection at 75 miles per day requires ~67 operator-days. The <strong>direct operating cost differential is on the order of $3–4 million annually</strong> — before counting the avoided-incident value that the PG&E 28:1 ROI figure captures. The math is not close.'
+    }
+  },
+
+  'environmental-conservation': {
+    slug: 'environmental-conservation',
+    number: '05',
+    name: 'Environmental & Conservation',
+    cardTagline: 'Eyes on ecosystems that no human should have to enter.',
+    heroTitle: ['A single fixed-wing drone surveys 1,200 acres in 90 minutes. A ground team ', 'cannot compete.'],
+    heroSub: 'Environmental science has been resource-constrained by the cost of placing humans in remote, dangerous terrain. Drones have removed that constraint. What was previously impossible — complete habitat population counts, continuous deforestation monitoring, aerial seeding across restoration zones — is now routine.',
+    compare: {
+      cost: {
+        trad: 'Multi-week field crews in remote terrain. Per-survey costs that preclude repeat monitoring programs. Sampling-based extrapolation with wide uncertainty bands.',
+        drone: '<strong>70% data collection time reduction</strong> translates directly to program cost. Marginal per-pass cost enables continuous monitoring that was not previously economically feasible.'
+      },
+      time: {
+        trad: '500-acre habitat survey: 3–5 days with a field crew. Reforestation seeding by hand or drop: weeks of crew time per restoration site.',
+        drone: '<strong>90-minute fixed-wing flight covers 1,200 acres.</strong> Aerial seeding drones plant tens of thousands of seedpods per day. Continuous monitoring replaces annual surveys.'
+      },
+      safety: {
+        trad: 'Researchers in terrain with wildlife, weather, and — in many regions — documented lethal threats from illegal poaching operations and unmarked mining activity.',
+        drone: 'Zero ground presence in the survey area. Conservation officers respond to confirmed incidents rather than patrolling open zones. Ranger fatalities from ambush are directly addressable.'
+      },
+      precision: {
+        trad: 'Walking transects. Ground-level visual surveys. Animal avoidance of human presence biases every count. Sampled estimates, not population counts.',
+        drone: 'Thermal capture of every heat signature in the survey zone. Animals unaware of aerial survey presence. 3–5 cm resolution. 100% field coverage — not sampling.'
+      }
+    },
+    quote: {
+      text: 'We could not have funded quarterly surveys of this habitat with ground crews. With drones, we run them continuously and see population dynamics in near real time. The science is a different science.',
+      attrib: 'Senior Ecologist — Conservation Research Program (industry case study)'
+    },
+    caseStudy: {
+      label: 'Case Study',
+      title: 'Thermal Drone Surveys — Full Population, Not Sample',
+      body: 'Traditional wildlife surveys produce estimates with confidence intervals so wide they can barely detect population trends. Thermal drone surveys of the same area deliver <strong>complete population counts</strong> from GPS-tagged imagery at sub-meter resolution, <strong>in a fraction of the time, with zero ground disturbance</strong> and full nocturnal species accessibility. For endangered species monitoring requiring quarterly assessments across thousands of hectares, this is the difference between a feasible program and an unfundable one.',
+      source: 'Source: Conservation biology drone program documentation'
+    },
+    horror: {
+      label: 'The Traditional Approach',
+      title: 'Rangers Killed in the Line of Patrol',
+      body: 'In Africa and Southeast Asia, wildlife conservation officers face documented lethal threats from well-armed illegal poaching networks. Traditional patrol-based monitoring requires rangers to physically enter poacher-controlled territories — a life-safety exposure inherent to the mission. <strong>Hundreds of conservation officers have been killed globally</strong> in ambush scenarios that drone surveillance directly addresses by detecting illegal activity from safe altitude.',
+      source: 'Source: Global conservation officer fatality records'
+    },
+    roi: {
+      items: [
+        { num: '70%', label: 'Data Collection Time Reduction' },
+        { num: '1,200 ac', label: 'Surveyed in a Single 90-Min Flight' },
+        { num: '100%', label: 'Habitat Coverage vs. Sampled Estimate' }
+      ],
+      math: 'For a conservation organization running quarterly surveys across a 5,000-hectare protected area: traditional ground surveys run 20+ field days per quarter at crew cost. Drone surveys run <strong>2–3 flight days per quarter at a fraction of the operating cost</strong>. The program model changes — from annual snapshots to continuous intelligence, from sampled estimates to complete counts, and from exposed patrol operations to precision response. Funding agencies increasingly require this data quality. Programs that cannot deliver it lose the grant.'
+    }
   }
-  const btn = document.querySelector('.form-submit');
-  btn.textContent = 'Inquiry Sent';
-  btn.style.background = 'var(--copper-dim)';
-  btn.disabled = true;
+};
+
+const INDUSTRY_ORDER = [
+  'construction-real-estate',
+  'renewable-energy',
+  'resource-exploration',
+  'oil-gas',
+  'environmental-conservation'
+];
+
+/* =============================================================
+   ROUTING
+   ============================================================= */
+
+function useRoute() {
+  const [route, setRoute] = useState(() => window.location.hash || '#/');
+
+  useEffect(() => {
+    const handler = () => setRoute(window.location.hash || '#/');
+    window.addEventListener('hashchange', handler);
+    return () => window.removeEventListener('hashchange', handler);
+  }, []);
+
+  return [route, (r) => { window.location.hash = r; window.scrollTo({ top: 0, behavior: 'smooth' }); }];
 }
+
+/* =============================================================
+   COMPONENTS
+   ============================================================= */
+
+function Nav({ onNavigate }) {
+  return (
+    <nav className="nav">
+      <div className="container nav-inner">
+        <a href="#/" className="logo" onClick={(e) => { e.preventDefault(); onNavigate('#/'); }}>
+          Card <span className="mark">✦</span> Lloyd Group
+        </a>
+        <div className="nav-links">
+          <a href="#/#portfolio" onClick={(e) => { e.preventDefault(); onNavigate('#/#portfolio'); }}>Portfolio</a>
+          <a href="#/industries" onClick={(e) => { e.preventDefault(); onNavigate('#/industries'); }}>Industries</a>
+          <a href="#/#capabilities" onClick={(e) => { e.preventDefault(); onNavigate('#/#capabilities'); }}>Capabilities</a>
+          <a href="#/#markets" onClick={(e) => { e.preventDefault(); onNavigate('#/#markets'); }}>Markets</a>
+          <a href="#/#team" onClick={(e) => { e.preventDefault(); onNavigate('#/#team'); }}>The Group</a>
+          <a href="#/#engage" onClick={(e) => { e.preventDefault(); onNavigate('#/#engage'); }}>Engage</a>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+function Footer({ onNavigate }) {
+  return (
+    <footer className="footer">
+      <div className="container">
+        <div className="footer-inner">
+          <div className="footer-brand">The Card Lloyd Group · Precision by Design</div>
+          <div className="footer-links">
+            <a href="#/industries" onClick={(e) => { e.preventDefault(); onNavigate('#/industries'); }}>Industries</a>
+            <a href="#/#portfolio" onClick={(e) => { e.preventDefault(); onNavigate('#/#portfolio'); }}>Portfolio</a>
+            <a href="#/#capabilities" onClick={(e) => { e.preventDefault(); onNavigate('#/#capabilities'); }}>Capabilities</a>
+            <a href="#/#markets" onClick={(e) => { e.preventDefault(); onNavigate('#/#markets'); }}>Markets</a>
+            <a href="https://aerasfog.com" target="_blank" rel="noopener">Aeras</a>
+          </div>
+        </div>
+        <div className="footer-copy">© 2026 The Card Lloyd Group</div>
+      </div>
+    </footer>
+  );
+}
+
+/* =============================================================
+   HOMEPAGE
+   ============================================================= */
+
+function Homepage({ onNavigate }) {
+  return (
+    <>
+      {/* HERO */}
+      <section className="hero">
+        <div className="container">
+          <div className="hero-eyebrow">Asset Intelligence Group</div>
+          <h1>
+            The Infrastructure running the world{' '}
+            <span className="emphasis">DEMANDS PRECISION.</span>
+          </h1>
+          <p className="lede">
+            The Card Lloyd Group is a drone intelligence holding company. We advise organizations on whether and how to deploy unmanned aerial systems — and operate the precision technology businesses that serve large asset owners when they need more than a vendor.
+          </p>
+          <div className="hero-actions">
+            <a href="#/#engage" className="btn btn-primary" onClick={(e) => { e.preventDefault(); onNavigate('#/#engage'); }}>
+              Request Capabilities
+            </a>
+            <a href="#/#portfolio" className="btn btn-ghost" onClick={(e) => { e.preventDefault(); onNavigate('#/#portfolio'); }}>
+              View Portfolio
+            </a>
+          </div>
+
+          <div className="ticker">
+            <div className="ticker-inner">
+              <span><strong>PSEG Partner</strong></span>
+              <span>Patented Drone Application System</span>
+              <span><strong>3D Thermal Intelligence</strong></span>
+              <span>ESG Documentation</span>
+              <span><strong>REITs · Stadiums · Healthcare · Government</strong></span>
+              <span>Nano Coating Technology</span>
+              <span><strong>In-House AI Platform</strong></span>
+              <span>Marine & Cruise</span>
+              <span><strong>Precision by Design</strong></span>
+              <span>Insurance Documentation</span>
+              <span><strong>PSEG Partner</strong></span>
+              <span>Patented Drone Application System</span>
+              <span><strong>3D Thermal Intelligence</strong></span>
+              <span>ESG Documentation</span>
+              <span><strong>REITs · Stadiums · Healthcare · Government</strong></span>
+              <span>Nano Coating Technology</span>
+              <span><strong>In-House AI Platform</strong></span>
+              <span>Marine & Cruise</span>
+              <span><strong>Precision by Design</strong></span>
+              <span>Insurance Documentation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* UAS CONSULTING SERVICES — immediately after hero */}
+      <section className="uas-section">
+        <div className="container">
+          <div className="uas-grid">
+            <div>
+              <div className="section-eyebrow">UAS Consulting Services</div>
+              <h2 className="uas-headline">
+                Find out what your industry is <span className="emphasis">leaving on the table.</span>
+              </h2>
+            </div>
+            <div>
+              <div className="uas-body">
+                <p>
+                  Drones have already rewritten the economics of every industry that depends on physical assets, remote terrain, or inspection at scale. The operators who understood it first are compounding the advantage. The ones who did not are losing ground every quarter and do not yet know it.
+                </p>
+                <p>
+                  The Card Lloyd Group advises and operates at the leading edge of that shift. Before we recommend a capability, we quantify what your industry is already losing without it — in cost, in time, in safety exposure, and in data quality no incumbent method can match.
+                </p>
+              </div>
+              <div className="uas-industries-list">
+                <span className="uas-tag">Construction & Real Estate</span>
+                <span className="uas-tag">Renewable Energy</span>
+                <span className="uas-tag">Resource Exploration</span>
+                <span className="uas-tag">Oil & Gas</span>
+                <span className="uas-tag">Environmental & Conservation</span>
+              </div>
+              <a href="#/industries" className="uas-cta" onClick={(e) => { e.preventDefault(); onNavigate('#/industries'); }}>
+                See What Your Industry Is Missing
+                <span className="uas-cta-arrow">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROBLEM */}
+      <section className="section">
+        <div className="container">
+          <div className="section-eyebrow">The Problem</div>
+          <h2 className="section-title">
+            Large asset owners are making billion-dollar decisions on <span className="emphasis">incomplete data.</span>
+          </h2>
+          <p className="section-lede">
+            HVAC systems consuming 40% of commercial energy while envelope failures go undetected for years. Roof systems carrying ponding water that no one has quantified. Drone vendors collecting data that no one can interpret. Maintenance crews applying coatings that degrade in 18 months.
+            <br /><br />
+            The cost isn't the vendor bill. <em className="copper">The cost is what you didn't know.</em>
+          </p>
+
+          <div className="problem-stats">
+            <div className="stat">
+              <div className="stat-num">40%</div>
+              <div className="stat-label">of commercial energy consumed by HVAC</div>
+            </div>
+            <div className="stat">
+              <div className="stat-num">30%</div>
+              <div className="stat-label">avg. avoidable waste in poorly maintained envelopes</div>
+            </div>
+            <div className="stat">
+              <div className="stat-num">10×</div>
+              <div className="stat-label">cost of reactive roof repair vs. early intervention</div>
+            </div>
+            <div className="stat">
+              <div className="stat-num">100%</div>
+              <div className="stat-label">defensible data for ESG and insurance</div>
+            </div>
+          </div>
+
+          <ul className="problem-list">
+            <li>
+              <span className="num">01</span>
+              <span className="text"><strong>Energy loss goes undetected.</strong> Thermal bridges, failed insulation, and air infiltration points are invisible to ground-based inspection — and cost asset owners millions annually in avoidable HVAC spend.</span>
+            </li>
+            <li>
+              <span className="num">02</span>
+              <span className="text"><strong>Roof failures are predictable — and preventable.</strong> Ponding water adds structural load, accelerates membrane degradation, and precedes catastrophic failure. We identify it years before it becomes a capital event.</span>
+            </li>
+            <li>
+              <span className="num">03</span>
+              <span className="text"><strong>Drone spend is largely wasted.</strong> Most organizations deploy drone operators who collect data no one can use. The technology is sound. The operators and the strategy behind them rarely are.</span>
+            </li>
+            <li>
+              <span className="num">04</span>
+              <span className="text"><strong>ESG documentation lacks teeth.</strong> Boards, insurers, and regulators require defensible data — not estimates. Most sustainability reporting cannot survive scrutiny.</span>
+            </li>
+            <li>
+              <span className="num">05</span>
+              <span className="text"><strong>Asset surfaces degrade faster than they should.</strong> Without proper protective coatings applied correctly at scale, oxidation, biological fouling, and UV degradation compress asset service life and inflate maintenance costs.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      {/* PORTFOLIO */}
+      <section className="section" id="portfolio">
+        <div className="container">
+          <div className="section-eyebrow">Portfolio</div>
+          <h2 className="section-title">
+            We build and acquire businesses operating where <span className="emphasis">infrastructure meets intelligence.</span>
+          </h2>
+          <p className="section-lede">
+            Our portfolio companies serve asset owners who require more than a vendor — they require a strategic partner with the technology, the data, and the discipline to deliver measurable outcomes.
+          </p>
+
+          <div className="port-grid">
+            <div className="port-card">
+              <div className="port-tag">Acquired 2024 · Operating Company</div>
+              <div className="port-name">Aeras</div>
+              <div className="port-sub">Exterior Cleaning & Restoration</div>
+              <div className="port-desc">
+                Industrial-scale exterior cleaning and restoration for the assets that matter most. Trusted by PSEG and proven across stadiums, arenas, REITs, hospitals, hotels, universities, and large commercial portfolios. Aeras brings the equipment capacity, safety protocols, and operational discipline that large asset owners require — and that most vendors cannot match.
+              </div>
+              <a href="https://aerasfog.com" target="_blank" rel="noopener" className="port-link">Visit Aeras →</a>
+            </div>
+            <div className="port-card">
+              <div className="port-tag">Strategic Referral Partner</div>
+              <div className="port-name">EarthEx</div>
+              <div className="port-sub">Geophysics & Mineral Exploration</div>
+              <div className="port-desc">
+                Mineral exploration and geophysical services. CLG acts as business development partner for EarthEx, connecting qualified clients and earning a commission on secured engagements.
+              </div>
+              <a href="#/#engage" className="port-link" onClick={(e) => { e.preventDefault(); onNavigate('#/#engage'); }}>Inquire via CLG →</a>
+            </div>
+            <div className="port-card">
+              <div className="port-tag">Acquisition Pipeline</div>
+              <div className="port-name" style={{ fontSize: '28px', lineHeight: 1.2 }}>Next Company</div>
+              <div className="port-sub">In Development</div>
+              <div className="port-desc">
+                The next Card Lloyd Group company is identified by one criterion — does it deliver measurable outcomes to large asset owners that no incumbent can replicate?
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONSULTING */}
+      <section className="section" id="consulting">
+        <div className="container">
+          <div className="section-eyebrow">Consulting Framework</div>
+          <h2 className="section-title">
+            Our advisory process follows a disciplined <span className="emphasis">three-phase structure.</span>
+          </h2>
+          <p className="section-lede">
+            Every CLG consulting engagement begins with one question: does drone technology generate defensible ROI for your specific assets, operations, and objectives? We answer that question before we recommend anything else.
+          </p>
+          <div className="phases">
+            <div className="phase">
+              <div className="phase-num">Phase I</div>
+              <div className="phase-name">Strategic Assessment</div>
+              <div className="phase-desc">
+                We evaluate whether unmanned aerial systems generate defensible ROI for your asset class, operational profile, and strategic objectives. Most organizations receive a clear answer within two weeks of engagement. If the case does not exist, we say so.
+              </div>
+              <div className="phase-deliv">Deliverable: Go / No-Go Assessment</div>
+            </div>
+            <div className="phase">
+              <div className="phase-num">Phase II</div>
+              <div className="phase-name">Structural Design</div>
+              <div className="phase-desc">
+                We determine the optimal operating model — proprietary in-house capability development versus third-party deployment — based on data volume, governance requirements, and total cost of ownership. The answer is specific to your organization, not a template recommendation.
+              </div>
+              <div className="phase-deliv">Deliverable: Operating Model Blueprint</div>
+            </div>
+            <div className="phase">
+              <div className="phase-num">Phase III</div>
+              <div className="phase-name">Provider Selection</div>
+              <div className="phase-desc">
+                We conduct independent due diligence, score qualified providers against defined criteria, and deliver a recommendation with no commercial bias. CLG retains no financial interest in any specific operator outcome. Advisory fees are engagement-based.
+              </div>
+              <div className="phase-deliv">Deliverable: Provider Selection Report</div>
+            </div>
+          </div>
+          <p className="section-lede" style={{ marginTop: '48px', marginBottom: 0 }}>
+            When third-party deployment is the right answer, CLG's own operating companies — Aeras, ESG, and Nano — are among the options considered. So are independent operators and referral partners including EarthEx. Our Phase I and Phase II conclusions are produced before any operating company relationship is introduced.
+          </p>
+        </div>
+      </section>
+
+      {/* CAPABILITIES */}
+      <section className="section" id="capabilities">
+        <div className="container">
+          <div className="section-eyebrow">Capabilities</div>
+          <h2 className="section-title">
+            Five practice areas. <span className="emphasis">One standard of precision.</span>
+          </h2>
+          <div className="caps">
+            <div className="cap">
+              <div className="cap-num">01</div>
+              <div className="cap-name">3D Thermal Scanning & ESG Intelligence</div>
+              <div className="cap-desc">
+                Our drone-mounted 3D thermal imaging systems identify energy loss, structural anomalies, and roof water retention with precision no ground-based inspection can replicate. Every finding is quantified in dollars. Every report is defensible for ESG disclosure, insurance documentation, and board-level capital planning. <em>We don't deliver images. We deliver decisions.</em>
+              </div>
+              <div className="cap-tags">
+                <span className="cap-tag">ESG Reporting</span>
+                <span className="cap-tag">HVAC Savings</span>
+                <span className="cap-tag">Insurance</span>
+                <span className="cap-tag">Government</span>
+              </div>
+            </div>
+            <div className="cap">
+              <div className="cap-num">02</div>
+              <div className="cap-name">Nano Coating Application</div>
+              <div className="cap-desc">
+                CLG holds the only patented electrostatic drone application system for nano coatings at commercial scale. TiO2 and zinc oxide formulations extend asset life, suppress biological growth, and reduce maintenance frequency across large and complex geometries — facades, rooftops, marine hulls — at a fraction of the time and cost of manual application.
+              </div>
+              <div className="cap-tags">
+                <span className="cap-tag">Patented System</span>
+                <span className="cap-tag">TiO2</span>
+                <span className="cap-tag">Zinc Oxide</span>
+                <span className="cap-tag">Marine</span>
+              </div>
+            </div>
+            <div className="cap">
+              <div className="cap-num">03</div>
+              <div className="cap-name">SaaS Platform & AI Asset Intelligence</div>
+              <div className="cap-desc">
+                Our in-house server infrastructure powers continuous asset intelligence — not one-time scans. Clients access live dashboards, historical thermal trend data, ESG metric tracking, and AI-generated maintenance recommendations through our proprietary platform. <em>Your asset data never leaves our infrastructure.</em>
+              </div>
+              <div className="cap-tags">
+                <span className="cap-tag">In-House AI</span>
+                <span className="cap-tag">3D Rendering</span>
+                <span className="cap-tag">Private Data</span>
+                <span className="cap-tag">API Access</span>
+              </div>
+            </div>
+            <div className="cap">
+              <div className="cap-num">04</div>
+              <div className="cap-name">Drone Strategy & Consulting</div>
+              <div className="cap-desc">
+                Large organizations consistently overpay underqualified drone operators or deploy technology where it generates no return. We conduct independent strategic assessments, design optimal operating models, and advise on provider selection — with no financial interest in the outcome. <em>Our only product is the right answer.</em>
+              </div>
+              <div className="cap-tags">
+                <span className="cap-tag">Strategic Assessment</span>
+                <span className="cap-tag">Structural Design</span>
+                <span className="cap-tag">Provider Selection</span>
+                <span className="cap-tag">Independent</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MARKETS */}
+      <section className="section" id="markets">
+        <div className="container">
+          <div className="section-eyebrow">Markets</div>
+          <h2 className="section-title">
+            Built for those who <span className="emphasis">own at scale.</span>
+          </h2>
+          <div className="markets">
+            <div className="market">
+              <div className="market-code">RE</div>
+              <div className="market-name">REITs & Large Property Owners</div>
+              <div className="market-desc">Systematic asset intelligence across large portfolios. ESG compliance, thermal data, and coating programs that turn assets into managed infrastructure.</div>
+            </div>
+            <div className="market">
+              <div className="market-code">ST</div>
+              <div className="market-name">Stadiums, Arenas & Venues</div>
+              <div className="market-desc">High-visibility structures with complex geometries and demanding maintenance schedules. Scale and precision — no downtime, no reputational risk.</div>
+            </div>
+            <div className="market">
+              <div className="market-code">HC</div>
+              <div className="market-name">Healthcare & University Campuses</div>
+              <div className="market-desc">Campus-scale portfolios with energy mandates, infection control requirements, and sustainability reporting obligations.</div>
+            </div>
+            <div className="market">
+              <div className="market-code">IN</div>
+              <div className="market-name">Insurance Industry</div>
+              <div className="market-desc">Thermal documentation, condition reports, and risk data for underwriters pricing large commercial policies and claims teams processing them.</div>
+            </div>
+            <div className="market">
+              <div className="market-code">MR</div>
+              <div className="market-name">Cruise Lines & Marine</div>
+              <div className="market-desc">Hull protection, biofouling reduction, and dry-dock frequency reduction for cruise operators and large commercial fleets.</div>
+            </div>
+            <div className="market">
+              <div className="market-code">GV</div>
+              <div className="market-name">Government & Public Sector</div>
+              <div className="market-desc">Federal, state, and municipal portfolios with deferred maintenance liability. We make the penny-saved case with data that survives audit.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TEAM */}
+      <section className="section" id="team">
+        <div className="container">
+          <div className="section-eyebrow">The Group</div>
+          <h2 className="section-title">
+            Founded on <span className="emphasis">expertise.</span>
+          </h2>
+          <div className="team">
+            <div className="person">
+              <div className="person-initials">EL</div>
+              <div className="person-name">Eric Lloyd</div>
+              <div className="person-role">Founder & Business Development</div>
+              <div className="person-bio">
+                Eric founded The Card Lloyd Group to bring precision technology and strategic discipline to an industry long dominated by underqualified operators and missed opportunity. He leads business development, client relationships, and strategic partnerships — translating CLG's technical capabilities into positioned value for the asset owners, facility managers, and executives who need it most.
+              </div>
+            </div>
+            <div className="person">
+              <div className="person-initials">DC</div>
+              <div className="person-name">Daniel Card</div>
+              <div className="person-role">Partner & Technology</div>
+              <div className="person-bio">
+                Daniel brings deep technical expertise across drone systems, data acquisition, and AI-driven asset analysis. He oversees CLG's technology infrastructure, platform development, and the engineering discipline behind our thermal scanning, nano coating application, and SaaS capabilities. His approach: every system should do what it claims, and every claim should be backed by data.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ENGAGE */}
+      <section className="section" id="engage">
+        <div className="container">
+          <div className="section-eyebrow">Engage the Group</div>
+          <h2 className="section-title">
+            Ready to stop leaving <span className="emphasis">money behind?</span>
+          </h2>
+          <p className="section-lede">
+            If you manage assets at scale, we have something worth your 30 minutes. Request our capabilities brief or start a conversation directly.
+            <br /><br />
+            We do not use sales development representatives. <em className="copper">You will speak with a principal.</em>
+          </p>
+
+          <div className="engage-grid">
+            <div className="engage-left">
+              <div className="contact">
+                <div className="contact-label">Email</div>
+                <div className="contact-value">
+                  <a href="mailto:contact@thecardlloydgroup.com">contact@thecardlloydgroup.com</a>
+                </div>
+              </div>
+              <div className="contact">
+                <div className="contact-label">Location</div>
+                <div className="contact-value">United States</div>
+              </div>
+              <div className="download-card">
+                <h4>Download Capabilities Brief</h4>
+                <p>One-page overview of CLG services and portfolio</p>
+                <button className="btn btn-ghost">Request Document</button>
+              </div>
+            </div>
+
+            <div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label className="form-label">First Name</label>
+                  <input className="form-control" type="text" />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Last Name</label>
+                  <input className="form-control" type="text" />
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Organization</label>
+                <input className="form-control" type="text" />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Role</label>
+                <select className="form-control">
+                  <option>Select your role</option>
+                  <option>C-Suite / Executive</option>
+                  <option>Facility / Property Management</option>
+                  <option>Sustainability / ESG</option>
+                  <option>Insurance / Risk</option>
+                  <option>Government / Public Sector</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Email</label>
+                <input className="form-control" type="email" />
+              </div>
+              <div className="form-group">
+                <label className="form-label">How can we help?</label>
+                <textarea className="form-control" rows="4"></textarea>
+              </div>
+              <button className="btn btn-primary">Send Inquiry</button>
+              <p style={{ marginTop: '16px', fontSize: '12px', opacity: 0.65 }}>We review every inquiry personally and respond within one business day.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+/* =============================================================
+   INDUSTRIES SCREEN
+   ============================================================= */
+
+function IndustriesScreen({ onNavigate }) {
+  return (
+    <section className="industries-screen">
+      <div className="container">
+        <a href="#/" className="industries-back" onClick={(e) => { e.preventDefault(); onNavigate('#/'); }}>
+          ← Back to Home
+        </a>
+        <div className="industries-hero">
+          <div className="section-eyebrow">UAS Consulting Services — Industries</div>
+          <h1 className="section-title">
+            Find out how The Card Lloyd Group can <span className="emphasis">benefit your industry.</span>
+          </h1>
+          <p className="section-lede" style={{ marginBottom: 0 }}>
+            Drones have already changed the operating math of every industry below. Every day without a program is measurable cost, measurable risk, and measurable data quality lost to competitors who moved first. Select your industry for the specific case.
+          </p>
+        </div>
+
+        <div className="industries-grid">
+          {INDUSTRY_ORDER.map((slug) => {
+            const ind = INDUSTRIES[slug];
+            return (
+              <div
+                key={slug}
+                className="industry-card"
+                onClick={() => onNavigate(`#/industries/${slug}`)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter') onNavigate(`#/industries/${slug}`); }}
+              >
+                <div>
+                  <div className="industry-card-num">{ind.number}</div>
+                  <div className="industry-card-name">{ind.name}</div>
+                  <div className="industry-card-tagline">{ind.cardTagline}</div>
+                </div>
+                <div className="industry-card-cta">
+                  See The Case <span className="industry-card-cta-arrow">→</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =============================================================
+   INDUSTRY DETAIL PAGE
+   ============================================================= */
+
+function IndustryDetail({ slug, onNavigate }) {
+  const ind = INDUSTRIES[slug];
+  if (!ind) {
+    return (
+      <section className="industry-detail">
+        <div className="container">
+          <a href="#/industries" className="industry-detail-back" onClick={(e) => { e.preventDefault(); onNavigate('#/industries'); }}>
+            ← Back to Industries
+          </a>
+          <h1 className="section-title">Industry not found.</h1>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="industry-detail">
+      <div className="container">
+        <a href="#/industries" className="industry-detail-back" onClick={(e) => { e.preventDefault(); onNavigate('#/industries'); }}>
+          ← Back to Industries
+        </a>
+
+        {/* HERO */}
+        <div className="id-hero">
+          <div className="id-eyebrow">Industry Brief · {ind.number}</div>
+          <h1 className="id-title">
+            {ind.heroTitle[0]}<span className="emphasis">{ind.heroTitle[1]}</span>
+          </h1>
+          <p className="id-tagline">{ind.heroSub}</p>
+        </div>
+
+        {/* COMPARISON */}
+        <div className="id-section">
+          <div className="id-section-label">Traditional vs. Drone</div>
+          <h2 className="id-section-head">The operating math is not close.</h2>
+          <div className="compare-grid">
+            <div className="compare-head" style={{ background: 'rgba(26,23,19,0.9)', color: 'var(--copper)' }}></div>
+            <div className="compare-head trad">Traditional</div>
+            <div className="compare-head drone">Drone</div>
+
+            <div className="compare-cell axis">Cost</div>
+            <div className="compare-cell trad">{ind.compare.cost.trad}</div>
+            <div className="compare-cell drone" dangerouslySetInnerHTML={{ __html: ind.compare.cost.drone }}></div>
+
+            <div className="compare-cell axis">Time</div>
+            <div className="compare-cell trad">{ind.compare.time.trad}</div>
+            <div className="compare-cell drone" dangerouslySetInnerHTML={{ __html: ind.compare.time.drone }}></div>
+
+            <div className="compare-cell axis">Safety</div>
+            <div className="compare-cell trad">{ind.compare.safety.trad}</div>
+            <div className="compare-cell drone">{ind.compare.safety.drone}</div>
+
+            <div className="compare-cell axis">Data Precision</div>
+            <div className="compare-cell trad">{ind.compare.precision.trad}</div>
+            <div className="compare-cell drone">{ind.compare.precision.drone}</div>
+          </div>
+        </div>
+
+        {/* QUOTE */}
+        <div className="id-section">
+          <div className="id-section-label">What Operators Say</div>
+          <div className="id-quote">
+            <div className="id-quote-text">"{ind.quote.text}"</div>
+            <div className="id-quote-attrib">— {ind.quote.attrib}</div>
+          </div>
+        </div>
+
+        {/* CASE STUDY + HORROR STORY */}
+        <div className="id-section">
+          <div className="id-section-label">Evidence</div>
+          <h2 className="id-section-head">The documented record.</h2>
+          <div className="id-story-grid">
+            <div className="id-story">
+              <div className="id-story-label">{ind.caseStudy.label}</div>
+              <div className="id-story-title">{ind.caseStudy.title}</div>
+              <div className="id-story-body" dangerouslySetInnerHTML={{ __html: ind.caseStudy.body }}></div>
+              <div className="id-story-source">{ind.caseStudy.source}</div>
+            </div>
+            <div className="id-story horror">
+              <div className="id-story-label">{ind.horror.label}</div>
+              <div className="id-story-title">{ind.horror.title}</div>
+              <div className="id-story-body" dangerouslySetInnerHTML={{ __html: ind.horror.body }}></div>
+              <div className="id-story-source">{ind.horror.source}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* ROI */}
+        <div className="id-section">
+          <div className="id-section-label">ROI</div>
+          <h2 className="id-section-head">The math your board will ask for.</h2>
+          <div className="roi-block">
+            <div className="roi-grid">
+              {ind.roi.items.map((item, i) => (
+                <div key={i} className="roi-item">
+                  <div className="roi-num">{item.num}</div>
+                  <div className="roi-label">{item.label}</div>
+                </div>
+              ))}
+            </div>
+            <div className="roi-math" dangerouslySetInnerHTML={{ __html: ind.roi.math }}></div>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="id-cta-block">
+          <h2 className="id-cta-head">
+            Ready to see what CLG can do for <span className="emphasis">{ind.name.toLowerCase()}?</span>
+          </h2>
+          <p className="id-cta-sub">
+            Every CLG engagement begins with an independent assessment. If the case does not exist, we say so. If it does, we deliver the operating model and the provider selection report that makes it real.
+          </p>
+          <a href="#/#engage" className="btn btn-primary" onClick={(e) => { e.preventDefault(); onNavigate('#/#engage'); }}>
+            Request Capabilities
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =============================================================
+   APP ROUTER
+   ============================================================= */
+
+function App() {
+  const [route, navigate] = useRoute();
+
+  // Handle in-page anchors when navigating to #/#section
+  useEffect(() => {
+    if (route.startsWith('#/#')) {
+      const anchor = route.slice(3);
+      setTimeout(() => {
+        const el = document.getElementById(anchor);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+    } else {
+      window.scrollTo({ top: 0 });
+    }
+  }, [route]);
+
+  let page;
+  if (route === '#/industries' || route === '#/industries/') {
+    page = <IndustriesScreen onNavigate={navigate} />;
+  } else if (route.startsWith('#/industries/')) {
+    const slug = route.slice('#/industries/'.length).replace(/\/$/, '');
+    page = <IndustryDetail slug={slug} onNavigate={navigate} />;
+  } else {
+    page = <Homepage onNavigate={navigate} />;
+  }
+
+  return (
+    <div className="shell">
+      <Nav onNavigate={navigate} />
+      {page}
+      <Footer onNavigate={navigate} />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
 </body>
 </html>
